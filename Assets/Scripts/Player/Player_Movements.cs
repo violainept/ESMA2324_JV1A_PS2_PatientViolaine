@@ -6,9 +6,6 @@ public class Player_Movements : MonoBehaviour
 {
     [Header("Configurations")]
 
-    public Sprite standing;
-    public Sprite crouching;
-
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider;
     private SpriteRenderer spriteRenderer;
@@ -18,9 +15,14 @@ public class Player_Movements : MonoBehaviour
     private float jumpForce = 5f;
 
     private bool isCrouched = false;
+    private bool isFacingRight = true;
+    private bool top;
 
+    [SerializeField] public Sprite standing;
+    [SerializeField] public Sprite crouching;
     [SerializeField] private Transform groundCheckLeft;
     [SerializeField] private Transform groundCheckRight;
+
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Vector2 standingSize;
     [SerializeField] private Vector2 crouchingSize;
@@ -32,11 +34,10 @@ public class Player_Movements : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
-        boxCollider.size = standingSize;
-
         spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = standing;
 
+        boxCollider.size = standingSize;
+        spriteRenderer.sprite = standing;
         standingSize = boxCollider.size;
     }
 
@@ -48,6 +49,8 @@ public class Player_Movements : MonoBehaviour
         Jumping();
         Crouching();
         ChangeGravity();
+        Flip();
+
     }
 
     // ----------------------------------------------------------------------------------- Deplacements ----------------------------------------------------------------------------------- //
@@ -92,12 +95,21 @@ public class Player_Movements : MonoBehaviour
         }
     }
 
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (Input.GetKeyDown(KeyCode.E)
+        {
+
+        }
+    }
+    // ----------------------------------------------------------------------------------- Inverser graviter ----------------------------------------------------------------------------------- //
     private void ChangeGravity()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G) && IsGrounded())
         {
-            rb.gravityScale = -4;
-            // A ajouter > %
+            rb.gravityScale *= -1;
+            Rotation();
         }
     }
 
@@ -105,6 +117,33 @@ public class Player_Movements : MonoBehaviour
     {
         return Physics2D.OverlapArea(groundCheckLeft.position, groundCheckRight.position);
     }
+    // ----------------------------------------------------------------------------------- Change de sens (gauche/droite) ----------------------------------------------------------------------------------- //
+    private void Flip()
+    {
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        {
+            isFacingRight = !isFacingRight;
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
+        }
+    }
+
+    // ----------------------------------------------------------------------------------- Change de sens (bas/haut) ----------------------------------------------------------------------------------- //
+    private void Rotation()
+    {
+        if (top == false)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 180f);
+        }
+        else
+        {
+            transform.eulerAngles = Vector3.zero;
+        }
+            top = !top;
+    }
+
+
 }
 
 
