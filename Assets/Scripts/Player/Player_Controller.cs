@@ -3,64 +3,51 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player_Movements : MonoBehaviour
+public class Player_Controller : MonoBehaviour
 {
     // ----------------------------------------------------------------------------------- Propriétés et Variables ----------------------------------------------------------------------------------- //
-    
+
+    public bool canUseGravity = true;
+
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider;
     private SpriteRenderer spriteRenderer;
 
-    // variables deplacements
     private float horizontal;
     private float speed = 5f;
-
-    // variables inverser gravité
     private float gravityNumber = 3; // TEST
-    public float currentGravityCounter;
     private float minGravityCounter = 0;
     private float maxGravityCounter;
-
-    // variables dash
     private float dashingPower = 24f;
     private float dashingTime = 0.2f;
-    public float dashCounter;
-    public bool canDash;
-    private bool isDashing;
-    [SerializeField] private TrailRenderer tr;
 
-    // variables changer de sens
+    private bool isDashing;
+    private bool isDead = false;
     private bool isFacingRight = true;
     private bool top;
 
-    // variables contact avec le sol
+    [SerializeField] private bool canDash;
+
+    [SerializeField] private float currentGravityCounter;
+    [SerializeField] private float dashCounter;
+
+    [SerializeField] private TrailRenderer tr;
+    [SerializeField] private ParticleSystem ps;
     [SerializeField] private Transform groundCheckLeft;
     [SerializeField] private Transform groundCheckRight;
     [SerializeField] private LayerMask groundLayer;
 
-    // variables accroupi
-    [SerializeField] public Sprite standing;
-    [SerializeField] public Sprite crouching;
-    [SerializeField] private Vector2 standingSize;
-    [SerializeField] private Vector2 crouchingSize;
-    [SerializeField] private Vector2 standingOffset;
-    [SerializeField] private Vector2 crouchingOffset;
-
-
-
+    // Initialisation
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        boxCollider.size = standingSize;
-        spriteRenderer.sprite = standing;
-        standingSize = boxCollider.size;
-
         maxGravityCounter = gravityNumber;
     }
 
+    // Commencement
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
@@ -71,24 +58,25 @@ public class Player_Movements : MonoBehaviour
             currentGravityCounter = maxGravityCounter;
         }
 
-        if (currentGravityCounter > (minGravityCounter - 1))
+        // SI Cas InverseGravityV2
+        if (currentGravityCounter <= (minGravityCounter - 1))
+        {
+            Die();
+        }
+
+
+            if (!isDead)
         {
             if (isDashing)
             {
                 return;
             }
 
-            Crouching();
-            ChangeGravityV2();
-            Flip();
+            ChangeGravity();
+            FlipDown();
             Dash(); // TEST
 
         }
-        else
-        {
-            Debug.Log("Dead");
-        }
-
     }
 
     private void FixedUpdate()
@@ -103,44 +91,21 @@ public class Player_Movements : MonoBehaviour
             Moving();
         }
     }
+
     // ----------------------------------------------------------------------------------- Mecanique : Deplacements ----------------------------------------------------------------------------------- //
+    
+    // Permet au Joueur de se déplacer
     private void Moving()
     {
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
     }
 
-    // ----------------------------------------------------------------------------------- Mecanique : Accroupi ----------------------------------------------------------------------------------- //
-    private void Crouching()
-    {
-        if (Input.GetKeyDown(KeyCode.C) && isGrounded())
-        {
-            spriteRenderer.sprite = crouching;
-            boxCollider.size = crouchingSize;
-            boxCollider.offset = crouchingOffset;
-        }
-
-    // ----------------------------------------------------------------------------------- Mecanique : Debout ----------------------------------------------------------------------------------- //
-
-        if (Input.GetKeyUp(KeyCode.C))
-        {
-            spriteRenderer.sprite = standing;
-            boxCollider.size = standingSize;
-            boxCollider.offset = standingOffset;
-        }
-    }
-
-   // ----------------------------------------------------------------------------------- PowerUp 1 : Inverser gravité ----------------------------------------------------------------------------------- //
+    // ----------------------------------------------------------------------------------- PowerUp 1 : Inverser gravité ----------------------------------------------------------------------------------- //
+   
+    // Permet au Joueur d'inverser la gravité sur un temps limité
     private void ChangeGravityV1() // Durée dans le temps, se recharge au sol
     {
         if (Input.GetKeyDown("space"))
-        {
-            
-            rb.gravityScale *= -1;
-            Rotation();
-        }
-    }    private void ChangeGravityV2() // Durée limitée, se recharge lors d'un checkpoint
-    {
-        if (Input.GetKeyDown("space") && isGrounded())
         {
             if (currentGravityCounter > (minGravityCounter - 1))
             {
@@ -152,8 +117,22 @@ public class Player_Movements : MonoBehaviour
         }
     }
 
+    private void ChangeGravity()
+    {
+        if (Input.GetKeyDown("space") && isGrounded() && canUseGravity)
+        {
+            ActivateGravity();
+        }
+    }
+     public void ActivateGravity() // Durée limitée, se recharge lors d'un checkpoint
+     {
+            rb.gravityScale *= -1;
+            Rotation();
+     }
+
     // ----------------------------------------------------------------------------------- PowerUp 2 : Dash ----------------------------------------------------------------------------------- //
    
+    // Permet au Joueur de réaliser un Dash lorsqu'il est dans les airs et qui se recharge au sol
     private void Dash() // Dash limité, utilisation unique lorsque la gravité inversée est activée.
     {
 
@@ -167,6 +146,7 @@ public class Player_Movements : MonoBehaviour
             StartCoroutine(DashCoroutine());
         }
     }
+
     private  IEnumerator DashCoroutine()
     {
         canDash = false;
@@ -181,15 +161,29 @@ public class Player_Movements : MonoBehaviour
         isDashing = false;
     }
 
+    // ----------------------------------------------------------------------------------- GameObject : Mort du Joueur ----------------------------------------------------------------------------------- //
+
+    // Permet au Joueur de mourir
+    public void Die()
+    {
+        isDead = true;
+        ps.Play();
+        Debug.Log("Player is dead.");
+        //animator.SetTrigger(dead);
+    }
+
     // ----------------------------------------------------------------------------------- GameObject : Contact Sol ----------------------------------------------------------------------------------- //
 
+    // Permet de vérifier si le Joueur entre en contact avec un sol
     public bool isGrounded()
     {
         return Physics2D.OverlapArea(groundCheckLeft.position, groundCheckRight.position);
     }
 
-    // ----------------------------------------------------------------------------------- Visuel/GameObject : Change de sens (gauche/droite) ----------------------------------------------------------------------------------- //
-    private void Flip()
+    // ----------------------------------------------------------------------------------- Visuel/GameObject : Change de sens (gauche/droite) par rapport au sol ----------------------------------------------------------------------------------- //
+   
+    // Permet de tourner le Joueur vers la gauche et la droite lorsqu'il est droit
+    private void FlipDown()
     {
 
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
@@ -201,7 +195,24 @@ public class Player_Movements : MonoBehaviour
         }
     }
 
+    // ----------------------------------------------------------------------------------- Visuel/GameObject : Change de sens (gauche/droite) par rapport au plafond ----------------------------------------------------------------------------------- //
+
+    // Permet de tourner le Joueur vers la gauche et la droite lorsqu'il est à l'envers
+    private void FlipUp()
+    {
+
+        if (isFacingRight && horizontal > 0f || !isFacingRight && horizontal < 0f)
+        {
+            isFacingRight = !isFacingRight;
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
+        }
+    }
+
     // ----------------------------------------------------------------------------------- Visuel/GameObject : Change de sens (bas/haut) ----------------------------------------------------------------------------------- //
+    
+    // Permet au Joueur d'avoir une rotation lorsqu'il utilise la mécanique d'inverser la gravité
     private void Rotation()
     {
         if (top == false)
@@ -214,8 +225,6 @@ public class Player_Movements : MonoBehaviour
         }
             top = !top;
     }
-
-
 }
 
 

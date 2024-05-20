@@ -4,54 +4,65 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Gravity_Wheel : MonoBehaviour
-{
-    public Player_Movements player;
+// Script permettant de charger/decharger la bar de Gravite
 
+public class Gravity_Bar : MonoBehaviour
+{
+    // ----------------------------------------------------------------------------------- Propriétés et Variables ----------------------------------------------------------------------------------- //
+
+
+    public Player_Controller player;
+
+    private float stock;
 
     public float gravity;
     public float maxGravity;
-    public float stock;
     public float gravPerSec;
 
-    public bool gravityExhausted;
-    public bool canTriggerGravity;
-    public bool gravityConsuming;
+    private bool gravityExhausted;
+    private bool canTriggerGravity;
+    private bool gravityConsuming;
 
     [SerializeField] private Image blueWheel;
     [SerializeField] private Image redWheel;
 
     private void Start()
     {
-        player = GameObject.FindObjectOfType(typeof(Player_Movements)) as Player_Movements;
+        player = GameObject.FindObjectOfType(typeof(Player_Controller)) as Player_Controller;
 
         stock = maxGravity - 0.07f;
     }
     private void Update()
     {
-        if (!gravityConsuming && canTriggerGravity && Input.GetKeyDown(KeyCode.Space)) 
-        {
+        GravityBar();
+    }
 
-            // Activé la gravité
+    // ----------------------------------------------------------------------------------- Bar de gravité ----------------------------------------------------------------------------------- //
+
+    private void GravityBar()
+    {
+        // Activé la gravité
+        if (!gravityConsuming && canTriggerGravity && Input.GetKeyDown(KeyCode.Space))
+        {
             canTriggerGravity = false;
             gravityConsuming = true;
         }
         if (gravityConsuming && !player.isGrounded())
         {
+            // Consumer la gravité
             if (gravity > 0f)
             {
-                // Consumer la gravité
                 gravity = Mathf.Max(0f, gravity - gravPerSec * Time.deltaTime);
             }
+            // Arrêter de consumer la gravité
             else
             {
-                // Arrêter de consumer la gravité
                 gravityConsuming = false;
             }
         }
+        // Recharger la gravité
         else
         {
-            // Recharger la gravité
             if (player.isGrounded())
             {
                 gravity = Mathf.Min(maxGravity, gravity + gravPerSec * Time.deltaTime);
@@ -64,7 +75,6 @@ public class Gravity_Wheel : MonoBehaviour
 
         UpdateDisplay();
     }
-
     private void UpdateDisplay()
     {
         if (gravityConsuming && !player.isGrounded())
@@ -85,7 +95,7 @@ public class Gravity_Wheel : MonoBehaviour
         {
             if (player.isGrounded())
             {
-                // Permet de faire disparaître la roue rouge lors de la recharge et de stocker sa quantité pour l'utiliser si la gravité est de nouveau consommée. 
+                // Permet de faire disparaître la roue rouge lors de la recharge et de stocker sa quantité pour l'utiliser si la gravité est de nouveau consommée
                 stock = redWheel.fillAmount;
                 redWheel.fillAmount = 0f;
 
@@ -93,6 +103,7 @@ public class Gravity_Wheel : MonoBehaviour
                 {
                     blueWheel.fillAmount = (gravity / maxGravity);
                 }
+                // PROBLEME : n'est jamais joue + manque le fait de bloquer la mecanique
                 else
                 {
                     redWheel.fillAmount = (gravity / maxGravity);

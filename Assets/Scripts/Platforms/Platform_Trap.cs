@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-// Script permettant de faire bouger l'ennemi selon des points donnés et de tuer le Joueur
-public class Enemy_Patrol : MonoBehaviour
+// Script permettant de faire bouger l'objet selon des points donnés et de tuer le Joueur
+public class Platform_Trap : MonoBehaviour
 {
 
     // ----------------------------------------------------------------------------------- Propriétés et Variables ----------------------------------------------------------------------------------- //
@@ -38,7 +38,7 @@ public class Enemy_Patrol : MonoBehaviour
         }
     }
 
-    // Définition des variables et propriétés de l'ennemi
+    // Définition des variables et propriétés de l'objet
     private void Start()
     {
         pointIndex = 1;
@@ -61,8 +61,8 @@ public class Enemy_Patrol : MonoBehaviour
 
     // ----------------------------------------------------------------------------------- Prochain point ----------------------------------------------------------------------------------- //
 
-    // Si l'ennemi se rapproche du dernier point, alors il fait demi-tour. Inversement si il arrive au point de départ.
-    // Permet de définir le prochain point ciblé et de faire bouger l'ennemi dans la bonne direction
+    // Si l'objet se rapproche du dernier point, alors il fait demi-tour. Inversement si il arrive au point de départ.
+    // Permet de définir le prochain point ciblé et de faire bouger l'objet dans la bonne direction en ayant des temps de pauses entre chaque point
     private void NextPoint()
     {
         transform.position = targetWaypoint;
@@ -80,13 +80,23 @@ public class Enemy_Patrol : MonoBehaviour
 
         pointIndex += direction;
         targetWaypoint = waypoints[pointIndex].transform.position;
+        StartCoroutine(WaitNextPoint());
+    }
+
+    // ----------------------------------------------------------------------------------- Attente entre les points ----------------------------------------------------------------------------------- //
+
+    // Attends le nombre de secondes defini par la variable puis lance la fonction de calcul de direction
+    // Permet de faire attendre quelques secondes la plateforme avant d'aller a un prochain point
+    private IEnumerator WaitNextPoint()
+    {
+        yield return new WaitForSeconds(waitDuration);
         DirectionCalculate();
     }
 
     // ----------------------------------------------------------------------------------- Calcul de la direction ----------------------------------------------------------------------------------- //
 
     // Calcul de la distance entre le prochain point et le point actuel
-    // Permet de faire bouger l'ennemi de sa position à la celle du prochain point
+    // Permet de faire bouger l'objet de sa position à la celle du prochain point
 
     private void DirectionCalculate()
     {
@@ -95,8 +105,8 @@ public class Enemy_Patrol : MonoBehaviour
 
     // ----------------------------------------------------------------------------------- Tuer le Joueur  ----------------------------------------------------------------------------------- //
 
-    // Si le Joueur rentre en contact avec l'ennemi, l'ennemi appelle la fonction Tuer
-    // Permet à l'ennemi de tuer le Joueur
+    // Si le Joueur rentre en contact avec l'objet, l'objet appelle la fonction Tuer
+    // Permet à l'objet de tuer le Joueur
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.CompareTag("Player"))
