@@ -420,6 +420,81 @@ Transform:
   - {fileID: 1147855882}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &405518745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 405518746}
+  - component: {fileID: 405518748}
+  - component: {fileID: 405518747}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &405518746
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405518745}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1006333199}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &405518747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405518745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &405518748
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405518745}
+  m_CullTransparentMesh: 1
 --- !u!1 &411334955
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,6 +668,7 @@ RectTransform:
   - {fileID: 1449067871}
   - {fileID: 1472782855}
   - {fileID: 847616276}
+  - {fileID: 1006333199}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1027,17 +1103,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3be47f0e041bf41b462915c123da88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canUseGravity: 0
+  gravityBar: {fileID: 1472782856}
   canDash: 1
-  currentGravityCounter: 0
   dashCounter: 0
-  tr: {fileID: 651739811}
-  ps: {fileID: 651739813}
   groundCheckLeft: {fileID: 2146250580}
   groundCheckRight: {fileID: 483780977}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  tr: {fileID: 651739811}
+  ps: {fileID: 651739813}
 --- !u!61 &651739810
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1406,8 +1481,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 8
-      minScalar: 4
+      scalar: 25
+      minScalar: 18
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1459,8 +1534,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.54517215, g: 0.7384084, b: 0.93710685, a: 1}
-      maxColor: {r: 0.93710685, g: 0.9130267, b: 0.7986036, a: 1}
+      minColor: {r: 0.5621612, g: 0.60172224, b: 0.9559748, a: 1}
+      maxColor: {r: 0.65723264, g: 0.90059745, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -1525,7 +1600,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 0.3
-      minScalar: 0.05
+      minScalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -6362,6 +6437,42 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1006333198
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1006333199}
+  m_Layer: 5
+  m_Name: Fake_Success
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1006333199
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006333198}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 405518746}
+  m_Father: {fileID: 461183047}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1020536411
 GameObject:
   m_ObjectHideFlags: 0
@@ -12133,10 +12244,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edd09357a150e1348b5502ae1ce9ee6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 651739809}
-  gravity: 100
-  maxGravity: 100
-  gravPerSec: 25
+  gravity: 0
+  maxGravity: 0
+  gravPerSec: 0
+  gravityExhausted: 0
+  canTriggerGravity: 0
+  gravityConsuming: 0
   blueWheel: {fileID: 1023487337}
   redWheel: {fileID: 1037093267}
 --- !u!114 &1449067873
@@ -12229,7 +12342,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1472782855
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12263,10 +12376,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edd09357a150e1348b5502ae1ce9ee6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 651739809}
-  gravity: 100
-  maxGravity: 100
-  gravPerSec: 25
+  gravity: 0
+  maxGravity: 0
+  gravPerSec: 0
+  gravityExhausted: 0
+  canTriggerGravity: 0
+  gravityConsuming: 0
   blueWheel: {fileID: 411334957}
   redWheel: {fileID: 1391292934}
 --- !u!114 &1472782857

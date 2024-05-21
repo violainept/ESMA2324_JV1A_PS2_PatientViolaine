@@ -7,44 +7,49 @@ public class Player_Controller : MonoBehaviour
 {
     // ----------------------------------------------------------------------------------- Propriétés et Variables ----------------------------------------------------------------------------------- //
 
-    public bool canUseGravity = true;
+    // Autres Scripts
+    public Gravity_Bar gravityBar;
 
+    // GameObject
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider;
     private SpriteRenderer spriteRenderer;
 
+    // Mouvements
     private float horizontal;
     private float speed = 5f;
-    private float gravityNumber = 3; // TEST
-    private float minGravityCounter = 0;
-    private float maxGravityCounter;
+
+    // Dash
     private float dashingPower = 24f;
     private float dashingTime = 0.2f;
-
     private bool isDashing;
-    private bool isDead = false;
-    private bool isFacingRight = true;
-    private bool top;
-
     [SerializeField] private bool canDash;
-
-    [SerializeField] private float currentGravityCounter;
     [SerializeField] private float dashCounter;
 
-    [SerializeField] private TrailRenderer tr;
-    [SerializeField] private ParticleSystem ps;
+    // Mort
+    private bool isDead = false;
+
+    // Contact avec le sol 
     [SerializeField] private Transform groundCheckLeft;
     [SerializeField] private Transform groundCheckRight;
     [SerializeField] private LayerMask groundLayer;
 
+    // Flip
+    private bool isFacingRight = true;
+
+    // Effets
+    [SerializeField] private TrailRenderer tr;
+    [SerializeField] private ParticleSystem ps;
+
+
     // Initialisation
     void Start()
     {
+        gravityBar = GameObject.FindObjectOfType(typeof(Gravity_Bar)) as Gravity_Bar;
+
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
-        maxGravityCounter = gravityNumber;
     }
 
     // Commencement
@@ -52,42 +57,28 @@ public class Player_Controller : MonoBehaviour
     {
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        if (isGrounded())
-        {
-            maxGravityCounter = gravityNumber;
-            currentGravityCounter = maxGravityCounter;
-        }
-
-        // SI Cas InverseGravityV2
-        if (currentGravityCounter <= (minGravityCounter - 1))
-        {
-            Die();
-        }
-
-
-            if (!isDead)
+        if (!isDead)
         {
             if (isDashing)
             {
                 return;
             }
 
-            ChangeGravity();
+            ActivateGravity();
             FlipDown();
-            Dash(); // TEST
+            Dash(); // A ajouter en tant que PowerUp
 
         }
     }
 
     private void FixedUpdate()
     {
-        if (isDashing)
+        if (!isDead)
         {
-            return;
-        }
-
-        if (currentGravityCounter > (minGravityCounter - 1))
-        {
+            if (isDashing)
+            {
+                return;
+            }
             Moving();
         }
     }
@@ -101,33 +92,23 @@ public class Player_Controller : MonoBehaviour
     }
 
     // ----------------------------------------------------------------------------------- PowerUp 1 : Inverser gravité ----------------------------------------------------------------------------------- //
-   
-    // Permet au Joueur d'inverser la gravité sur un temps limité
-    private void ChangeGravityV1() // Durée dans le temps, se recharge au sol
+     
+    // Permet au Joueur de changer la gravité dans un temps limité
+
+    // Notes : possibilite une (gravite se recharge au contact sol) et possibilite deux (gravite se recharge a un checkpoint)
+    
+    public void ActivateGravity()
     {
         if (Input.GetKeyDown("space"))
         {
-            if (currentGravityCounter > (minGravityCounter - 1))
-            {
-                currentGravityCounter -= 1;
-            }
-
-            rb.gravityScale *= -1;
-            Rotation();
+            ChangeGravity();
         }
     }
-
-    private void ChangeGravity()
+    
+    public void ChangeGravity()
     {
-        if (Input.GetKeyDown("space") && isGrounded() && canUseGravity)
-        {
-            ActivateGravity();
-        }
-    }
-     public void ActivateGravity() // Durée limitée, se recharge lors d'un checkpoint
-     {
-            rb.gravityScale *= -1;
-            Rotation();
+        rb.gravityScale *= -1;
+        Rotation();
      }
 
     // ----------------------------------------------------------------------------------- PowerUp 2 : Dash ----------------------------------------------------------------------------------- //
@@ -166,9 +147,9 @@ public class Player_Controller : MonoBehaviour
     // Permet au Joueur de mourir
     public void Die()
     {
+        Debug.Log("Player is dead.");
         isDead = true;
         ps.Play();
-        Debug.Log("Player is dead.");
         //animator.SetTrigger(dead);
     }
 
@@ -183,6 +164,7 @@ public class Player_Controller : MonoBehaviour
     // ----------------------------------------------------------------------------------- Visuel/GameObject : Change de sens (gauche/droite) par rapport au sol ----------------------------------------------------------------------------------- //
    
     // Permet de tourner le Joueur vers la gauche et la droite lorsqu'il est droit
+    
     private void FlipDown()
     {
 
@@ -195,35 +177,15 @@ public class Player_Controller : MonoBehaviour
         }
     }
 
-    // ----------------------------------------------------------------------------------- Visuel/GameObject : Change de sens (gauche/droite) par rapport au plafond ----------------------------------------------------------------------------------- //
-
-    // Permet de tourner le Joueur vers la gauche et la droite lorsqu'il est à l'envers
-    private void FlipUp()
-    {
-
-        if (isFacingRight && horizontal > 0f || !isFacingRight && horizontal < 0f)
-        {
-            isFacingRight = !isFacingRight;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
-        }
-    }
-
     // ----------------------------------------------------------------------------------- Visuel/GameObject : Change de sens (bas/haut) ----------------------------------------------------------------------------------- //
-    
+
     // Permet au Joueur d'avoir une rotation lorsqu'il utilise la mécanique d'inverser la gravité
     private void Rotation()
     {
-        if (top == false)
-        {
-            transform.eulerAngles = new Vector3(0, 0, 180f);
-        }
-        else
-        {
-            transform.eulerAngles = Vector3.zero;
-        }
-            top = !top;
+
+        Vector3 ScalerUP = transform.localScale;
+        ScalerUP.y *= -1;
+        transform.localScale = ScalerUP;
     }
 }
 

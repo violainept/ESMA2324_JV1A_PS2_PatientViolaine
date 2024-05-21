@@ -1,118 +1,91 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-// Script permettant de charger/decharger la bar de Gravite
-
 public class Gravity_Bar : MonoBehaviour
 {
-    // ----------------------------------------------------------------------------------- Propriétés et Variables ----------------------------------------------------------------------------------- //
-
-
-    public Player_Controller player;
-
-    private float stock;
 
     public float gravity;
     public float maxGravity;
     public float gravPerSec;
-
-    private bool gravityExhausted;
-    private bool canTriggerGravity;
-    private bool gravityConsuming;
-
+    public bool gravityExhausted;
+    public bool canTriggerGravity;
+    public bool gravityConsuming;
     [SerializeField] private Image blueWheel;
     [SerializeField] private Image redWheel;
 
-    private void Start()
-    {
-        player = GameObject.FindObjectOfType(typeof(Player_Controller)) as Player_Controller;
-
-        stock = maxGravity - 0.07f;
-    }
     private void Update()
     {
-        GravityBar();
-    }
-
-    // ----------------------------------------------------------------------------------- Bar de gravité ----------------------------------------------------------------------------------- //
-
-    private void GravityBar()
-    {
-        // Activé la gravité
         if (!gravityConsuming && canTriggerGravity && Input.GetKeyDown(KeyCode.Space))
         {
-            canTriggerGravity = false;
-            gravityConsuming = true;
+            ActivateGravity();
         }
-        if (gravityConsuming && !player.isGrounded())
+        if (gravityConsuming)
         {
-            // Consumer la gravité
             if (gravity > 0f)
             {
-                gravity = Mathf.Max(0f, gravity - gravPerSec * Time.deltaTime);
+                ConsumeGravity();
             }
-            // Arrêter de consumer la gravité
             else
             {
-                gravityConsuming = false;
+                StopConsumeGravity();
             }
         }
-        // Recharger la gravité
         else
         {
-            if (player.isGrounded())
-            {
-                gravity = Mathf.Min(maxGravity, gravity + gravPerSec * Time.deltaTime);
-                if (gravity >= maxGravity)
-                {
-                    canTriggerGravity = true;
-                }
-            }
+            RefillGravity();
         }
 
         UpdateDisplay();
+
+
     }
+
+
+    private void ActivateGravity()
+    {
+        canTriggerGravity = false;
+        gravityConsuming = true;
+    }
+
+    private void ConsumeGravity()
+    {
+        gravity = Mathf.Max(0f, gravity - gravPerSec * Time.deltaTime);
+    }
+
+    private void StopConsumeGravity()
+    {
+        gravityConsuming = false;
+    }
+
+    private void RefillGravity()
+    {
+        gravity = Mathf.Min(maxGravity, gravity + gravPerSec * Time.deltaTime);
+        if (gravity >= maxGravity)
+        {
+            canTriggerGravity = true;
+        }
+    }
+
     private void UpdateDisplay()
     {
-        if (gravityConsuming && !player.isGrounded())
+        if (gravityConsuming)
         {
-            redWheel.fillAmount = stock;
             blueWheel.fillAmount = (gravity / maxGravity);
-            
-            if (blueWheel.fillAmount == 0f)
-            {
-                redWheel.fillAmount = (gravity / maxGravity);
-            }
-            else
-            {
-                redWheel.fillAmount = (gravity / maxGravity + 0.05f);
-            }
+            //95 -> 100
+            // 75 -> 80
+            // 0-> 0
+            float prorata = (gravity / maxGravity) * 5f;
+            int arrondi = Mathf.CeilToInt(prorata);
+            redWheel.fillAmount = arrondi / 5f;
         }
         else
         {
-            if (player.isGrounded())
+            redWheel.fillAmount = (gravity / maxGravity);
+            if (gravity >= maxGravity)
             {
-                // Permet de faire disparaître la roue rouge lors de la recharge et de stocker sa quantité pour l'utiliser si la gravité est de nouveau consommée
-                stock = redWheel.fillAmount;
-                redWheel.fillAmount = 0f;
-
-                if (gravity > 0f)
-                {
-                    blueWheel.fillAmount = (gravity / maxGravity);
-                }
-                // PROBLEME : n'est jamais joue + manque le fait de bloquer la mecanique
-                else
-                {
-                    redWheel.fillAmount = (gravity / maxGravity);
-                    if (gravity >= maxGravity)
-                    {
-                        blueWheel.fillAmount = 1f;
-                    }
-                }
-              
+                blueWheel.fillAmount = 1f;
             }
         }
     }
