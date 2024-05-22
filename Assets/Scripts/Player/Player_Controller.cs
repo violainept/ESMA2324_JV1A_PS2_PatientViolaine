@@ -99,7 +99,7 @@ public class Player_Controller : MonoBehaviour
     
     public void ActivateGravity()
     {
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown("space") && gravityBar.canTriggerGravity == true)
         {
             ChangeGravity();
         }

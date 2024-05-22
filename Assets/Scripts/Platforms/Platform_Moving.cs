@@ -9,13 +9,13 @@ public class Platform_Moving : MonoBehaviour
 
     // ----------------------------------------------------------------------------------- Propriétés et Variables ----------------------------------------------------------------------------------- //
 
-
     private int pointIndex;
     private int pointCount;
     private int direction = 1;
 
     private Rigidbody2D rb;
     private Rigidbody2D playerRb;
+    private float originalGravity;
     private Vector3 moveDirection;
     private Vector3 targetWaypoint;
 
@@ -107,6 +107,7 @@ public class Platform_Moving : MonoBehaviour
 
     // Si le Joueur rentre en contact avec la plateforme, il devient enfant du GameObject. A l'inverse, s'il sort de son champ de contact, il n'est plus enfant
     // Permet de faire bouger le Joueur avec la plateforme
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -115,7 +116,7 @@ public class Platform_Moving : MonoBehaviour
         }
     }
 
-    private void OnTrigerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {

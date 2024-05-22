@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2070035740038932738}
   - component: {fileID: 622993199500956227}
   m_Layer: 0
-  m_Name: Collectible_001
+  m_Name: Collectible
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 8157519653525117454}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2.0419555, y: 1.299913, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -143,3 +143,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0decf42b91dc0e44af52941b0d28dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCollected: 0

@@ -5,15 +5,22 @@ using UnityEngine.UI;
 
 public class Gravity_Bar : MonoBehaviour
 {
+    public Player_Controller player;
 
     public float gravity;
     public float maxGravity;
     public float gravPerSec;
+    public float gravityRefill;
     public bool gravityExhausted;
     public bool canTriggerGravity;
     public bool gravityConsuming;
     [SerializeField] private Image blueWheel;
     [SerializeField] private Image redWheel;
+
+    private void Start()
+    {
+        player = GameObject.FindObjectOfType(typeof(Player_Controller)) as Player_Controller;
+    }
 
     private void Update()
     {
@@ -21,7 +28,7 @@ public class Gravity_Bar : MonoBehaviour
         {
             ActivateGravity();
         }
-        if (gravityConsuming)
+        if (gravityConsuming && !player.isGrounded())
         {
             if (gravity > 0f)
             {
@@ -32,7 +39,7 @@ public class Gravity_Bar : MonoBehaviour
                 StopConsumeGravity();
             }
         }
-        else
+        else if (player.isGrounded())
         {
             RefillGravity();
         }
@@ -41,7 +48,6 @@ public class Gravity_Bar : MonoBehaviour
 
 
     }
-
 
     private void ActivateGravity()
     {
@@ -61,7 +67,7 @@ public class Gravity_Bar : MonoBehaviour
 
     private void RefillGravity()
     {
-        gravity = Mathf.Min(maxGravity, gravity + gravPerSec * Time.deltaTime);
+        gravity = Mathf.Min(maxGravity, gravity + gravityRefill * Time.deltaTime);
         if (gravity >= maxGravity)
         {
             canTriggerGravity = true;
@@ -73,19 +79,18 @@ public class Gravity_Bar : MonoBehaviour
         if (gravityConsuming)
         {
             blueWheel.fillAmount = (gravity / maxGravity);
-            //95 -> 100
-            // 75 -> 80
-            // 0-> 0
-            float prorata = (gravity / maxGravity) * 5f;
-            int arrondi = Mathf.CeilToInt(prorata);
-            redWheel.fillAmount = arrondi / 5f;
+            redWheel.fillAmount = (gravity / maxGravity + 0.03f);
+
         }
         else
         {
+            canTriggerGravity = false;
             redWheel.fillAmount = (gravity / maxGravity);
+
             if (gravity >= maxGravity)
             {
                 blueWheel.fillAmount = 1f;
+                canTriggerGravity = true;
             }
         }
     }
