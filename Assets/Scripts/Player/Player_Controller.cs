@@ -7,9 +7,6 @@ public class Player_Controller : MonoBehaviour
 {
     // ----------------------------------------------------------------------------------- Propriétés et Variables ----------------------------------------------------------------------------------- //
 
-    // Autres Scripts
-    public Gravity_Bar gravityBar;
-
     // GameObject
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider;
@@ -17,7 +14,12 @@ public class Player_Controller : MonoBehaviour
 
     // Mouvements
     private float horizontal;
-    private float speed = 5f;
+    private float speed = 10f;
+
+    // Gravite
+    public float currentGravity;
+    public float maxGravity;
+    public bool canTriggerGravity = true;
 
     // Dash
     private float dashingPower = 24f;
@@ -25,6 +27,9 @@ public class Player_Controller : MonoBehaviour
     private bool isDashing;
     [SerializeField] private bool canDash;
     [SerializeField] private float dashCounter;
+
+    // Interagir
+    public bool isInteracting = false;
 
     // Mort
     private bool isDead = false;
@@ -45,8 +50,6 @@ public class Player_Controller : MonoBehaviour
     // Initialisation
     void Start()
     {
-        gravityBar = GameObject.FindObjectOfType(typeof(Gravity_Bar)) as Gravity_Bar;
-
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -59,14 +62,20 @@ public class Player_Controller : MonoBehaviour
 
         if (!isDead)
         {
+                    if (isGrounded())
+        {
+            currentGravity = maxGravity;
+            canTriggerGravity = true;
+        }
+
             if (isDashing)
             {
                 return;
             }
 
             ActivateGravity();
-            FlipDown();
-            Dash(); // A ajouter en tant que PowerUp
+            Flip();
+            Dash();
 
         }
     }
@@ -91,15 +100,26 @@ public class Player_Controller : MonoBehaviour
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
     }
 
+    // ----------------------------------------------------------------------------------- Mecanique : Interagir  ----------------------------------------------------------------------------------- //
+
+    public void Interact()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            isInteracting = true;
+            isInteracting = !isInteracting;
+        }
+    }
+
     // ----------------------------------------------------------------------------------- PowerUp 1 : Inverser gravité ----------------------------------------------------------------------------------- //
-     
+
     // Permet au Joueur de changer la gravité dans un temps limité
 
     // Notes : possibilite une (gravite se recharge au contact sol) et possibilite deux (gravite se recharge a un checkpoint)
-    
+
     public void ActivateGravity()
     {
-        if (Input.GetKeyDown("space") && gravityBar.canTriggerGravity == true)
+        if (Input.GetKeyDown("space") && canTriggerGravity)
         {
             ChangeGravity();
         }
@@ -107,22 +127,25 @@ public class Player_Controller : MonoBehaviour
     
     public void ChangeGravity()
     {
-        rb.gravityScale *= -1;
-        Rotation();
-     }
-
-    // ----------------------------------------------------------------------------------- PowerUp 2 : Dash ----------------------------------------------------------------------------------- //
-   
-    // Permet au Joueur de réaliser un Dash lorsqu'il est dans les airs et qui se recharge au sol
-    private void Dash() // Dash limité, utilisation unique lorsque la gravité inversée est activée.
-    {
-
-        if (isGrounded())
+        if (currentGravity > 0)
         {
-            canDash = true;
+            currentGravity -= 1;
+            rb.gravityScale *= -1;
+            Rotation();
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && !isGrounded())
+        if (currentGravity <= 0)
+        {
+            canTriggerGravity = false;
+        }
+     }
+
+
+    // ----------------------------------------------------------------------------------- PowerUp 2 : Dash ----------------------------------------------------------------------------------- //
+    // Permet au Joueur de réaliser un Dash
+    private void Dash()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             StartCoroutine(DashCoroutine());
         }
@@ -140,6 +163,7 @@ public class Player_Controller : MonoBehaviour
         tr.emitting = false;
         rb.gravityScale = originalGravity;
         isDashing = false;
+        canDash = true;
     }
 
     // ----------------------------------------------------------------------------------- GameObject : Mort du Joueur ----------------------------------------------------------------------------------- //
@@ -165,7 +189,7 @@ public class Player_Controller : MonoBehaviour
    
     // Permet de tourner le Joueur vers la gauche et la droite lorsqu'il est droit
     
-    private void FlipDown()
+    private void Flip()
     {
 
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
