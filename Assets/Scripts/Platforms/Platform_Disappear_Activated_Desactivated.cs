@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Test : MonoBehaviour
+public class Platform_Disappear_Activated_Desactivated : MonoBehaviour
 {
     public GameObject platform;
     public Animator anim;

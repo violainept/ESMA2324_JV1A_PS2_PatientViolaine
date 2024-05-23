@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Platform_Disappear : MonoBehaviour
 {
-    public Test test;
+    public Platform_Disappear_Activated_Desactivated platform;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            test.CallPlatformSystem();
+            platform.CallPlatformSystem();
         }
     }
 }

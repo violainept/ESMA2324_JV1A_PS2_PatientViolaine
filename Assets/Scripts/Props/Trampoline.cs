@@ -9,7 +9,7 @@ public class Trampoline : MonoBehaviour
         if (collision.transform.CompareTag("Player"))
         {
             Player_Controller player = collision.transform.GetComponent<Player_Controller>();
-            player.ActivateGravity();
+            player.ChangeGravity();
         }
     }
 }

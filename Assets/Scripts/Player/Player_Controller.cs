@@ -26,7 +26,6 @@ public class Player_Controller : MonoBehaviour
     private float dashingTime = 0.2f;
     private bool isDashing;
     [SerializeField] private bool canDash;
-    [SerializeField] private float dashCounter;
 
     // Interagir
     public bool isInteracting = false;
@@ -73,6 +72,7 @@ public class Player_Controller : MonoBehaviour
                 return;
             }
 
+            Interact();
             ActivateGravity();
             Flip();
             Dash();
@@ -107,7 +107,6 @@ public class Player_Controller : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             isInteracting = true;
-            isInteracting = !isInteracting;
         }
     }
 
