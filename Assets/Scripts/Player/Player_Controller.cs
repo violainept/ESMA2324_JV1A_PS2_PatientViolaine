@@ -31,7 +31,7 @@ public class Player_Controller : MonoBehaviour
     public bool isInteracting = false;
 
     // Mort
-    private bool isDead = false;
+    public bool isDead = false;
 
     // Contact avec le sol 
     [SerializeField] private Transform groundCheckLeft;
@@ -72,11 +72,16 @@ public class Player_Controller : MonoBehaviour
                 return;
             }
 
-            Interact();
+            Interacting();
             ActivateGravity();
             Flip();
             Dash();
 
+        }
+
+        if (isDead)
+        {
+            Die();
         }
     }
 
@@ -102,7 +107,7 @@ public class Player_Controller : MonoBehaviour
 
     // ----------------------------------------------------------------------------------- Mecanique : Interagir  ----------------------------------------------------------------------------------- //
 
-    public void Interact()
+    public void Interacting()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -168,7 +173,6 @@ public class Player_Controller : MonoBehaviour
     public void Die()
     {
         Debug.Log("Player is dead.");
-        isDead = true;
         ps.Play();
         //animator.SetTrigger(dead);
     }

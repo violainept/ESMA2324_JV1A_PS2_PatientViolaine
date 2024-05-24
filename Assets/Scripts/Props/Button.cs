@@ -9,6 +9,7 @@ public class Button : MonoBehaviour
     public Animator anim;
 
     private Vector2 originalSize;
+    private Vector2 originalOffset;
 
     private void Start()
     {
@@ -20,7 +21,9 @@ public class Button : MonoBehaviour
         {
             anim.SetBool("isPushed", true);
             originalSize = button.size;
-            button.size = new Vector3(1.071056f, 0.5422902f, 0);
+            originalOffset = button.offset;
+            button.size = new Vector3(1.071056f, 0.55f, 0);
+            button.offset = new Vector3(0, -0.28f, 0);
             obstacle.SetActive(false);
         }
 
@@ -32,6 +35,7 @@ public class Button : MonoBehaviour
         {
             anim.SetBool("isPushed", false);
             button.size = originalSize;
+            button.offset = originalOffset;
             obstacle.SetActive(true);
         }
 

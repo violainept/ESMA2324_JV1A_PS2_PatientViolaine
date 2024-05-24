@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 // Script permettant de faire bouger l'ennemi selon des points donnés et de tuer le Joueur
-public class Enemy_Patrol : MonoBehaviour
+public class Enemy_Patrolling_Horizontal : MonoBehaviour
 {
 
-    // ----------------------------------------------------------------------------------- Propriétés et Variables ----------------------------------------------------------------------------------- //
+    // ----------------------------------------------------------------------------------- Proprietes et Variables ----------------------------------------------------------------------------------- //
 
 
     private int pointIndex;
@@ -19,7 +19,6 @@ public class Enemy_Patrol : MonoBehaviour
     private Vector3 targetWaypoint;
 
     [SerializeField] private float speed;
-    [SerializeField] private float waitDuration;
 
     [SerializeField] private GameObject ways;
     [SerializeField] private Transform[] waypoints;
@@ -38,7 +37,6 @@ public class Enemy_Patrol : MonoBehaviour
         }
     }
 
-    // Définition des variables et propriétés de l'ennemi
     private void Start()
     {
         pointIndex = 1;
@@ -59,7 +57,6 @@ public class Enemy_Patrol : MonoBehaviour
         rb.velocity = moveDirection * speed;
     }
 
-    // ----------------------------------------------------------------------------------- Prochain point ----------------------------------------------------------------------------------- //
 
     // Si l'ennemi se rapproche du dernier point, alors il fait demi-tour. Inversement si il arrive au point de départ.
     // Permet de définir le prochain point ciblé et de faire bouger l'ennemi dans la bonne direction
@@ -83,7 +80,6 @@ public class Enemy_Patrol : MonoBehaviour
         DirectionCalculate();
     }
 
-    // ----------------------------------------------------------------------------------- Calcul de la direction ----------------------------------------------------------------------------------- //
 
     // Calcul de la distance entre le prochain point et le point actuel
     // Permet de faire bouger l'ennemi de sa position à la celle du prochain point
@@ -93,7 +89,6 @@ public class Enemy_Patrol : MonoBehaviour
         moveDirection = (targetWaypoint - transform.position).normalized;
     }
 
-    // ----------------------------------------------------------------------------------- Tuer le Joueur  ----------------------------------------------------------------------------------- //
 
     // Si le Joueur rentre en contact avec l'ennemi, l'ennemi appelle la fonction Tuer
     // Permet à l'ennemi de tuer le Joueur
@@ -102,7 +97,7 @@ public class Enemy_Patrol : MonoBehaviour
         if (collision.transform.CompareTag("Player"))
         {
             Player_Controller playerController = collision.transform.GetComponent<Player_Controller>();
-            playerController.Die();
+            playerController.isDead = true;
         }
     }
 }

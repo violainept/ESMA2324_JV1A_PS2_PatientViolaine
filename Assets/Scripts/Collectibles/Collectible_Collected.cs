@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Collectible_Collection : MonoBehaviour
+public class Collectible_Collected : MonoBehaviour
 {
     public bool isCollected = false;
     // public AudioClip sound;

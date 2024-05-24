@@ -9,7 +9,7 @@ public class Spikes : MonoBehaviour
         if (collision.transform.CompareTag("Player"))
         {
             Player_Controller player = collision.transform.GetComponent<Player_Controller>();
-            player.Die();
+            player.isDead = true;
         }
     }
 }

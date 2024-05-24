@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 // Script permettant de faire bouger la plateforme selon des points donnés
-public class Platform_Moving : MonoBehaviour
+public class Enemy_Patrolling_Vertical : MonoBehaviour
 {
     private int pointIndex;
     private int pointCount;
@@ -17,6 +17,8 @@ public class Platform_Moving : MonoBehaviour
 
     [SerializeField] private float speed;
     [SerializeField] private float waitDuration;
+    [SerializeField] private float waitJump;
+    [SerializeField] private float jump;
 
     [SerializeField] private GameObject ways;
     [SerializeField] private Transform[] waypoints;
@@ -65,16 +67,20 @@ public class Platform_Moving : MonoBehaviour
         if (pointIndex == pointCount - 1)
         {
             direction = -1;
+            pointIndex += direction;
+            targetWaypoint = waypoints[pointIndex].transform.position;
+            StartCoroutine(WaitNextPoint());
+            return;
         }
 
         if (pointIndex == 0)
         {
             direction = 1;
+            pointIndex += direction;
+            targetWaypoint = waypoints[pointIndex].transform.position;
+            StartCoroutine(WaitNextPointV2());
+            return;
         }
-
-        pointIndex += direction;
-        targetWaypoint = waypoints[pointIndex].transform.position;
-        StartCoroutine(WaitNextPoint());
     }
 
     // Attends le nombre de secondes defini par la variable puis lance la fonction de calcul de direction
@@ -85,30 +91,19 @@ public class Platform_Moving : MonoBehaviour
         DirectionCalculate();
     }
 
+    private IEnumerator WaitNextPointV2()
+    {
+        yield return new WaitForSeconds(waitJump);
+        rb.AddForce(new Vector3(rb.velocity.x, jump));
+        yield return new WaitForSeconds(waitDuration);
+        DirectionCalculate();
+    }
+
     // Calcul de la distance entre le prochain point et le point actuel
     // Permet de faire bouger la plateforme de sa position à la celle du prochain point
 
     private void DirectionCalculate()
     {
         moveDirection = (targetWaypoint - transform.position).normalized;
-    }
-
-    // Si le Joueur rentre en contact avec la plateforme, il devient enfant du GameObject. A l'inverse, s'il sort de son champ de contact, il n'est plus enfant
-    // Permet de faire bouger le Joueur avec la plateforme
-    
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            other.transform.parent = this.transform;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            other.transform.parent = null;
-        }
     }
 }

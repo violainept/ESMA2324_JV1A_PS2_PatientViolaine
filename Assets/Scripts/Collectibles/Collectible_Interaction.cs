@@ -2,21 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Object_Interact : MonoBehaviour
+public class Collectible_Interaction : MonoBehaviour
 {
+
     public GameObject panelObject;
-    public Player_Controller player;
     public Animator anim;
 
     private bool panelIsActivated = false;
     private bool playerIsInsideTrigger = false;
-
-
-    private void Start()
-    {
-        player = GameObject.FindObjectOfType(typeof(Player_Controller)) as Player_Controller;
-        
-    }
 
     private void Update()
     {

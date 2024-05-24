@@ -112,7 +112,7 @@ public class Platform_Trap : MonoBehaviour
         if (collision.transform.CompareTag("Player"))
         {
             Player_Controller playerController = collision.transform.GetComponent<Player_Controller>();
-            playerController.Die();
+            playerController.isDead = true;
         }
     }
 }

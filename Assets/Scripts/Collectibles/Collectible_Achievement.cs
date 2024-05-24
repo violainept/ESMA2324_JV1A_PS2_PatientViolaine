@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Achievement_Unlocked : MonoBehaviour
+public class Collectible_Achievement : MonoBehaviour
 {
-    public Collectible_Collection collectible;
+    public Collectible_Collected collectible;
     public Animator anim;
 
     private void Start()
     {
-        collectible = GameObject.FindObjectOfType(typeof(Collectible_Collection)) as Collectible_Collection;
         anim = GetComponent<Animator>();
     }
 
