@@ -94,8 +94,10 @@ public class Enemy_Patrolling_Vertical : MonoBehaviour
     private IEnumerator WaitNextPointV2()
     {
         yield return new WaitForSeconds(waitJump);
+        rb.isKinematic = false;
         rb.AddForce(new Vector3(rb.velocity.x, jump));
         yield return new WaitForSeconds(waitDuration);
+        rb.isKinematic = true;
         DirectionCalculate();
     }
 
