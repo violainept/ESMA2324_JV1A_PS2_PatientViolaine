@@ -107,12 +107,12 @@ public class Platform_Trap : MonoBehaviour
 
     // Si le Joueur rentre en contact avec l'objet, l'objet appelle la fonction Tuer
     // Permet à l'objet de tuer le Joueur
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        if (collision.transform.CompareTag("Player"))
+        if (other.transform.CompareTag("Player"))
         {
-            Player_Controller playerController = collision.transform.GetComponent<Player_Controller>();
-            playerController.isDead = true;
+            Player_Death playerDeath = other.transform.GetComponent<Player_Death>();
+            playerDeath.isDead = true;
         }
     }
 }

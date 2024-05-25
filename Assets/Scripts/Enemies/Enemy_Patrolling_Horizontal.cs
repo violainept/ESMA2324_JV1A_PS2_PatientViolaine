@@ -89,15 +89,14 @@ public class Enemy_Patrolling_Horizontal : MonoBehaviour
         moveDirection = (targetWaypoint - transform.position).normalized;
     }
 
-
     // Si le Joueur rentre en contact avec l'ennemi, l'ennemi appelle la fonction Tuer
     // Permet à l'ennemi de tuer le Joueur
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        if (collision.transform.CompareTag("Player"))
+        if (other.transform.CompareTag("Player"))
         {
-            Player_Controller playerController = collision.transform.GetComponent<Player_Controller>();
-            playerController.isDead = true;
+            Player_Death playerDeath = other.transform.GetComponent<Player_Death>();
+            playerDeath.isDead = true;
         }
     }
 }

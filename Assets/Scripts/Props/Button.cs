@@ -5,39 +5,48 @@ using UnityEngine;
 public class Button : MonoBehaviour
 {
     public GameObject obstacle;
-    public BoxCollider2D button;
-    public Animator anim;
+    public Animator obstacleAnim;
+
+    public BoxCollider2D buttonCollider;
+    public Animator buttonAnim;
 
     private Vector2 originalSize;
     private Vector2 originalOffset;
 
-    private void Start()
-    {
-        button = GetComponent<BoxCollider2D>();
-    }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Objects"))
         {
-            anim.SetBool("isPushed", true);
-            originalSize = button.size;
-            originalOffset = button.offset;
-            button.size = new Vector3(1.071056f, 0.55f, 0);
-            button.offset = new Vector3(0, -0.28f, 0);
-            obstacle.SetActive(false);
+            buttonAnim.SetBool("isPushed", true);
+            originalSize = buttonCollider.size;
+            originalOffset = buttonCollider.offset;
+            buttonCollider.size = new Vector3(1.111111f, 0, 0);
+            buttonCollider.offset = new Vector3(0, -0.5555556f, 0);
+            StartCoroutine(obstacleDesactivated());
         }
 
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Objects"))
         {
-            anim.SetBool("isPushed", false);
-            button.size = originalSize;
-            button.offset = originalOffset;
-            obstacle.SetActive(true);
+            buttonAnim.SetBool("isPushed", false);
+            buttonCollider.size = originalSize;
+            buttonCollider.offset = originalOffset;
+            StartCoroutine(obstacleActivated());
         }
+    }
 
+    private IEnumerator obstacleActivated()
+    {
+        obstacleAnim.SetBool("isVisible", true);
+        yield return new WaitForSeconds(1);
+    }
+
+    private IEnumerator obstacleDesactivated()
+    {
+        obstacleAnim.SetBool("isVisible", false);
+        yield return new WaitForSeconds(1);
     }
 }

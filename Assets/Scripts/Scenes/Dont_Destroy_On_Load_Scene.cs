@@ -8,7 +8,6 @@ public class Dont_Destroy_On_Load_Scene : MonoBehaviour
     {
         foreach (var element in objects)
         {
-            Debug.Log(element.name);
             DontDestroyOnLoad(element);
         }
     }

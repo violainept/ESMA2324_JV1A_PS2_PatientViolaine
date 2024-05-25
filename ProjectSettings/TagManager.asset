@@ -5,8 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Objects
   - Obstacle
-  - Block
+  - FadeSystem
+  - PlayerSpawn
   layers:
   - Default
   - TransparentFX

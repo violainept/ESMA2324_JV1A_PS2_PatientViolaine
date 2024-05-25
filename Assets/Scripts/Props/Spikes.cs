@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Spikes : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        if (collision.transform.CompareTag("Player"))
+        if (other.transform.CompareTag("Player"))
         {
-            Player_Controller player = collision.transform.GetComponent<Player_Controller>();
-            player.isDead = true;
+            Player_Death playerDeath = other.transform.GetComponent<Player_Death>();
+            playerDeath.isDead = true;
         }
     }
 }

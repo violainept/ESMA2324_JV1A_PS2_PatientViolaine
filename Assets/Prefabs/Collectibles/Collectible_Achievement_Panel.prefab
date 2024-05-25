@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 5235133423737421901}
   - component: {fileID: 5882459119570964820}
   m_Layer: 5
-  m_Name: Achievement_Unlocked
+  m_Name: Collectible_Achievement_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -5,8 +5,7 @@ using UnityEngine;
 // Permet que l'ennemi tire en direction du Joueur
 public class Enemy_Shooting : MonoBehaviour
 {
-    // ----------------------------------------------------------------------------------- Propriétés et Variables ----------------------------------------------------------------------------------- //
-    public Player_Controller playerController;
+    public Player_Death playerDeath;
 
     private GameObject player;
 
@@ -23,7 +22,7 @@ public class Enemy_Shooting : MonoBehaviour
     // Permet a l'ennemi de tirer en direction du Joueur
     private void Update()
     {
-        if (playerController.isDead == false)
+        if (playerDeath.isDead == false)
         {
             float distance = Vector2.Distance(transform.position, player.transform.position);
 

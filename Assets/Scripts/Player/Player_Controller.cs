@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Player_Controller : MonoBehaviour
 {
     // ----------------------------------------------------------------------------------- Propriétés et Variables ----------------------------------------------------------------------------------- //
+
+    // Other objects
+    private Player_Death playerDeath;
 
     // GameObject
     private Rigidbody2D rb;
@@ -17,9 +19,9 @@ public class Player_Controller : MonoBehaviour
     private float speed = 10f;
 
     // Gravite
-    public float currentGravity;
-    public float maxGravity;
-    public bool canTriggerGravity = true;
+    private float maxGravity = 2;
+    [SerializeField] private float currentGravity;
+    [SerializeField] private bool canTriggerGravity = true;
 
     // Dash
     private float dashingPower = 50f;
@@ -30,8 +32,6 @@ public class Player_Controller : MonoBehaviour
     // Interagir
     public bool isInteracting = false;
 
-    // Mort
-    public bool isDead = false;
 
     // Contact avec le sol 
     [SerializeField] private Transform groundCheckLeft;
@@ -43,85 +43,54 @@ public class Player_Controller : MonoBehaviour
 
     // Effets
     [SerializeField] private TrailRenderer tr;
-    [SerializeField] private ParticleSystem ps;
 
-
-    // Initialisation
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    // Commencement
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        if (!isDead)
-        {
-                    if (isGrounded())
+        if (isGrounded())
         {
             currentGravity = maxGravity;
             canTriggerGravity = true;
         }
 
-            if (isDashing)
-            {
-                return;
-            }
-
-            Interacting();
-            ActivateGravity();
-            Flip();
-            Dash();
-
-        }
-
-        if (isDead)
+        if (isDashing)
         {
-            Die();
+            return;
         }
+
+        Flip();
+        EnableGravity();
+        Dash();
     }
 
     private void FixedUpdate()
     {
-        if (!isDead)
+        if (isDashing)
         {
-            if (isDashing)
-            {
-                return;
-            }
-            Moving();
+            return;
         }
+
+        Moving();
     }
 
     // ----------------------------------------------------------------------------------- Mecanique : Deplacements ----------------------------------------------------------------------------------- //
-    
     // Permet au Joueur de se déplacer
     private void Moving()
     {
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
     }
 
-    // ----------------------------------------------------------------------------------- Mecanique : Interagir  ----------------------------------------------------------------------------------- //
 
-    public void Interacting()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            isInteracting = true;
-        }
-    }
-
-    // ----------------------------------------------------------------------------------- PowerUp 1 : Inverser gravité ----------------------------------------------------------------------------------- //
-
-    // Permet au Joueur de changer la gravité dans un temps limité
-
-    // Notes : possibilite une (gravite se recharge au contact sol) et possibilite deux (gravite se recharge a un checkpoint)
-
-    public void ActivateGravity()
+    // ----------------------------------------------------------------------------------- Mecanique principale : Inverser gravité ----------------------------------------------------------------------------------- //
+    // Permet au Joueur de changer la gravité de façon limitée (maximum de 2 fois)
+    public void EnableGravity()
     {
         if (Input.GetKeyDown("space") && canTriggerGravity)
         {
@@ -144,8 +113,7 @@ public class Player_Controller : MonoBehaviour
         }
      }
 
-
-    // ----------------------------------------------------------------------------------- PowerUp 2 : Dash ----------------------------------------------------------------------------------- //
+    // ----------------------------------------------------------------------------------- Mecanique secondaire : Dash ----------------------------------------------------------------------------------- //
     // Permet au Joueur de réaliser un Dash
     private void Dash()
     {
@@ -167,18 +135,7 @@ public class Player_Controller : MonoBehaviour
         canDash = true;
     }
 
-    // ----------------------------------------------------------------------------------- GameObject : Mort du Joueur ----------------------------------------------------------------------------------- //
-
-    // Permet au Joueur de mourir
-    public void Die()
-    {
-        Debug.Log("Player is dead.");
-        ps.Play();
-        //animator.SetTrigger(dead);
-    }
-
     // ----------------------------------------------------------------------------------- GameObject : Contact Sol ----------------------------------------------------------------------------------- //
-
     // Permet de vérifier si le Joueur entre en contact avec un sol
     public bool isGrounded()
     {
@@ -186,7 +143,6 @@ public class Player_Controller : MonoBehaviour
     }
 
     // ----------------------------------------------------------------------------------- Visuel/GameObject : Change de sens (gauche/droite) par rapport au sol ----------------------------------------------------------------------------------- //
-   
     // Permet de tourner le Joueur vers la gauche et la droite lorsqu'il est droit
     
     private void Flip()
@@ -202,7 +158,6 @@ public class Player_Controller : MonoBehaviour
     }
 
     // ----------------------------------------------------------------------------------- Visuel/GameObject : Change de sens (bas/haut) ----------------------------------------------------------------------------------- //
-
     // Permet au Joueur d'avoir une rotation lorsqu'il utilise la mécanique d'inverser la gravité
     private void Rotation()
     {
