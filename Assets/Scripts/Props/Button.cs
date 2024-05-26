@@ -15,7 +15,7 @@ public class Button : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Objects"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Object"))
         {
             buttonAnim.SetBool("isPushed", true);
             originalSize = buttonCollider.size;
@@ -29,7 +29,7 @@ public class Button : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Objects"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Object"))
         {
             buttonAnim.SetBool("isPushed", false);
             buttonCollider.size = originalSize;

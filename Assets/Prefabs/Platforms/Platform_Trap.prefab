@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 1536495985012670518}
   m_Layer: 0
   m_Name: Platform_Trap
-  m_TagString: Untagged
+  m_TagString: DeadlyProps
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

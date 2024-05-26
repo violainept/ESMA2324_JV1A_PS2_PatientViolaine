@@ -8,7 +8,8 @@ public class Enemy_behaviour : MonoBehaviour
 {
     // ----------------------------------------------------------------------------------- Propriétés et Variables ----------------------------------------------------------------------------------- //
     
-    public Player_Controller player;
+    public Player_Health playerHealth;
+    public GameObject player;
 
     public float rayCastLength;
     public float attackDistance;
@@ -38,7 +39,7 @@ public class Enemy_behaviour : MonoBehaviour
 
     private void Start()
     {
-        player = GetComponent<Player_Controller>() as Player_Controller;
+        playerHealth = player.GetComponent<Player_Health>();
     }
 
     private void Update()
@@ -49,7 +50,7 @@ public class Enemy_behaviour : MonoBehaviour
             Move();
         }
 
-        if (!InsideOfLimits() && !inRange && !anim.GetCurrentAnimatorStateInfo(0).IsName("enemy_attack"))
+        if (!InsideOfLimits() && !inRange && !anim.GetCurrentAnimatorStateInfo(0).IsName("attack"))
         {
             SelectTarget();
         }
@@ -105,7 +106,7 @@ public class Enemy_behaviour : MonoBehaviour
         if (cooling)
         {
             Cooldown();
-            anim.SetBool("attack", false);
+            anim.SetBool("Attack", false);
         }
     }
 
@@ -115,7 +116,7 @@ public class Enemy_behaviour : MonoBehaviour
     {
         anim.SetBool("canWalk", true);
 
-        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("enemy_attack"))
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("attack"))
         {
             Vector2 targetPosition = new Vector2(target.position.x, transform.position.y);
 
@@ -129,10 +130,10 @@ public class Enemy_behaviour : MonoBehaviour
     {
         timer = intTimer;
         attackMode = true;
-        Debug.Log("Player is dead");
+        playerHealth.isDead = true;
 
         anim.SetBool("canWalk", false);
-        anim.SetBool("attack", true);
+        anim.SetBool("Attack", true);
     }
 
     // ----------------------------------------------------------------------------------- Timer ----------------------------------------------------------------------------------- //
@@ -154,7 +155,7 @@ public class Enemy_behaviour : MonoBehaviour
     {
         cooling = false;
         attackMode = false;
-        anim.SetBool("attack", false);
+        anim.SetBool("Attack", false);
     }
 
     // ----------------------------------------------------------------------------------- RayCast ----------------------------------------------------------------------------------- //

@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 5271745415128294289}
   m_Layer: 0
   m_Name: Enemy_Patrolling_Horizontal
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

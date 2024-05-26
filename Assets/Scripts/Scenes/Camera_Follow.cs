@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Camera_Follow : MonoBehaviour
 {
-    [Header("Configurations")]
-    public GameObject player;
-    public float timeOffset;
-    public Vector3 posOffset;
+    private Vector3 offset = new Vector3(0f, 0f, -10f);
+    private float smoothTime = 0.10f;
+    private Vector3 velocity = Vector3.zero;
 
-    private Vector3 velocity;
+    [SerializeField] private Transform target;
 
-    void Update()
+    private void Update()
     {
-        transform.position = Vector3.SmoothDamp(transform.position, player.transform.position + posOffset, ref velocity, timeOffset);
+        Vector3 targetPosition = target.position + offset;
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Death_Zone : MonoBehaviour
 {
-    public Player_Death playerDeath;
+    public Player_Health playerHealth;
     private Transform playerSpawn;
     private Animator fadeSystem;
 
@@ -17,7 +17,7 @@ public class Death_Zone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerDeath.isDead = true;
+            playerHealth.isDead = true;
         }
     }
 

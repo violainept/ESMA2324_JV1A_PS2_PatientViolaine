@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Player_Controller : MonoBehaviour
 {
-    // ----------------------------------------------------------------------------------- Propriétés et Variables ----------------------------------------------------------------------------------- //
+    // ----------------------------------------------------------------------------------- Proprietes et Variables ----------------------------------------------------------------------------------- //
 
     // Other objects
-    private Player_Death playerDeath;
+    private Player_Health playerHealth;
 
     // GameObject
     private Rigidbody2D rb;
@@ -23,15 +23,8 @@ public class Player_Controller : MonoBehaviour
     [SerializeField] private float currentGravity;
     [SerializeField] private bool canTriggerGravity = true;
 
-    // Dash
-    private float dashingPower = 50f;
-    private float dashingTime = 0.2f;
-    private bool isDashing;
-    [SerializeField] private bool canDash;
-
     // Interagir
     public bool isInteracting = false;
-
 
     // Contact avec le sol 
     [SerializeField] private Transform groundCheckLeft;
@@ -40,9 +33,6 @@ public class Player_Controller : MonoBehaviour
 
     // Flip
     private bool isFacingRight = true;
-
-    // Effets
-    [SerializeField] private TrailRenderer tr;
 
     void Start()
     {
@@ -60,22 +50,12 @@ public class Player_Controller : MonoBehaviour
             canTriggerGravity = true;
         }
 
-        if (isDashing)
-        {
-            return;
-        }
-
         Flip();
         EnableGravity();
-        Dash();
     }
 
     private void FixedUpdate()
     {
-        if (isDashing)
-        {
-            return;
-        }
 
         Moving();
     }
@@ -94,46 +74,24 @@ public class Player_Controller : MonoBehaviour
     {
         if (Input.GetKeyDown("space") && canTriggerGravity)
         {
-            ChangeGravity();
+            if (currentGravity > 0)
+            {
+                currentGravity -= 1;
+                ChangeGravity();
+            }
+
+            if (currentGravity <= 0)
+            {
+                canTriggerGravity = false;
+            }
         }
     }
     
     public void ChangeGravity()
     {
-        if (currentGravity > 0)
-        {
-            currentGravity -= 1;
-            rb.gravityScale *= -1;
-            Rotation();
-        }
-
-        if (currentGravity <= 0)
-        {
-            canTriggerGravity = false;
-        }
+        rb.gravityScale *= -1;
+        Rotation();
      }
-
-    // ----------------------------------------------------------------------------------- Mecanique secondaire : Dash ----------------------------------------------------------------------------------- //
-    // Permet au Joueur de réaliser un Dash
-    private void Dash()
-    {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
-        {
-            StartCoroutine(DashCoroutine());
-        }
-    }
-
-    private  IEnumerator DashCoroutine()
-    {
-        canDash = false;
-        isDashing = true;
-        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
-        tr.emitting = true;
-        yield return new WaitForSeconds(dashingTime);
-        tr.emitting = false;
-        isDashing = false;
-        canDash = true;
-    }
 
     // ----------------------------------------------------------------------------------- GameObject : Contact Sol ----------------------------------------------------------------------------------- //
     // Permet de vérifier si le Joueur entre en contact avec un sol

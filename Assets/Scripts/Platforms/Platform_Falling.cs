@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class Platform_Falling : MonoBehaviour
 {
-    // ----------------------------------------------------------------------------------- Propriétés et Variables ----------------------------------------------------------------------------------- //
-
     private float fallDelay = 0.5f;
     private float destroyDelay = 2f;
 
@@ -21,8 +19,6 @@ public class Platform_Falling : MonoBehaviour
             StartCoroutine(Fall());
         }
     }
-
-    // ----------------------------------------------------------------------------------- Tombe ----------------------------------------------------------------------------------- //
 
     // Changement du rigidbody de la plateforme en dynamique afin qu'au bout de quelques secondes elle tombe et se détruit
     // Permet de faire tomber la plateforme après quelques secondes (+ detruire afin d'eviter tout probleme avec d'autres gameobjects présents)
