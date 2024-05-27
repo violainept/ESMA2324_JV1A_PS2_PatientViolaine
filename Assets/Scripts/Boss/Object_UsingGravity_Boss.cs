@@ -6,14 +6,12 @@ using UnityEngine;
 public class Object_UsingGravity_Boss : MonoBehaviour
 {
     // Autres GameObject/script
-    public Object_Spawner_Boss objectSpawner;
-    public GameObject spawner;
-    public Enemy_Boss enemyBoss;
-    public GameObject enemy;
+    public Object_Spawner_Boss wall;
+    public GameObject wallGO; // "wallGO" signifie "wallGameObject"
 
     // GameObject
     public GameObject objectGO;
-    public Rigidbody2D rb;
+    public Rigidbody2D objectRB;
     private Vector2 originalPosition;
 
     // Gravite
@@ -32,8 +30,7 @@ public class Object_UsingGravity_Boss : MonoBehaviour
     private void Start()
     {
         originalPosition = new Vector2(positionX, positionY);
-        objectSpawner = spawner.GetComponent<Object_Spawner_Boss>();
-        enemyBoss = enemy.GetComponent<Enemy_Boss>();
+        wall = wallGO.GetComponent<Object_Spawner_Boss>();
     }
     private void Update()
     {
@@ -44,14 +41,15 @@ public class Object_UsingGravity_Boss : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.transform.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             canChangeGravity = true;
         }
 
-        if (other.transform.CompareTag("DeadlyProps"))
+        if (other.CompareTag("DeadlyProps"))
         {
-            Destroy(gameObject);
+            Contact();
+            wall.canDestroy = true;
         }
     }
     private void OnTriggerExit2D(Collider2D other)
@@ -62,13 +60,17 @@ public class Object_UsingGravity_Boss : MonoBehaviour
         }
     }
 
+    public void Contact()
+    {
+        objectGO.SetActive(false);
+        objectGO.transform.position = originalPosition;
+    }
     private void changeGravity()
     {
         originalGravity = -originalGravity;
-        rb.gravityScale = originalGravity;
+        objectRB.gravityScale = originalGravity;
         Rotation();
     }
-
 
     public bool isGrounded()
     {

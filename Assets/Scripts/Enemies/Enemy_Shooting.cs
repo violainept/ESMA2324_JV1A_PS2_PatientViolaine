@@ -5,7 +5,7 @@ using UnityEngine;
 // Permet que l'ennemi tire en direction du Joueur
 public class Enemy_Shooting : MonoBehaviour
 {
-    public Player_Health playerHealth;
+    public Player_Controller playerHealth;
 
     private GameObject player;
 

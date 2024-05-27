@@ -6,33 +6,37 @@ public class Player_Controller : MonoBehaviour
 {
     // ----------------------------------------------------------------------------------- Proprietes et Variables ----------------------------------------------------------------------------------- //
 
-    // Other objects
-    private Player_Health playerHealth;
-
-    // GameObject
+    [Header("GameObject")]
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider;
     private SpriteRenderer spriteRenderer;
 
-    // Mouvements
+    [Header("Mouvements")]
     private float horizontal;
     private float speed = 10f;
 
-    // Gravite
-    private float maxGravity = 2;
+    [Header("Inverser gravité")]
     [SerializeField] private float currentGravity;
     [SerializeField] private bool canTriggerGravity = true;
+    private float maxGravity = 2;
 
-    // Interagir
-    public bool isInteracting = false;
+    [Header("Mort")]
+    private Animator fadeSystem;
+    public bool isDead = false;
+    public bool Restart = false; // Lorsque le Joueur est mort, permet de reset les ennemis
 
-    // Contact avec le sol 
+    [Header("Contact au Sol")]
     [SerializeField] private Transform groundCheckLeft;
     [SerializeField] private Transform groundCheckRight;
     [SerializeField] private LayerMask groundLayer;
 
-    // Flip
+    [Header("Se retourne")]
     private bool isFacingRight = true;
+
+    private void Awake()
+    {
+        fadeSystem = GameObject.FindGameObjectWithTag("FadeSystem").GetComponent<Animator>();
+    }
 
     void Start()
     {
@@ -44,20 +48,30 @@ public class Player_Controller : MonoBehaviour
     {
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        if (isGrounded())
+        if (isDead)
         {
-            currentGravity = maxGravity;
-            canTriggerGravity = true;
+            StartCoroutine(Death());
         }
 
-        Flip();
-        EnableGravity();
+        if (!isDead)
+        {
+            if (isGrounded())
+            {
+                currentGravity = maxGravity;
+                canTriggerGravity = true;
+            }
+
+            Flip();
+            EnableGravity();
+        }
     }
 
     private void FixedUpdate()
     {
-
-        Moving();
+        if (!isDead)
+        {
+            Moving();
+        }
     }
 
     // ----------------------------------------------------------------------------------- Mecanique : Deplacements ----------------------------------------------------------------------------------- //
@@ -66,7 +80,6 @@ public class Player_Controller : MonoBehaviour
     {
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
     }
-
 
     // ----------------------------------------------------------------------------------- Mecanique principale : Inverser gravité ----------------------------------------------------------------------------------- //
     // Permet au Joueur de changer la gravité de façon limitée (maximum de 2 fois)
@@ -92,6 +105,18 @@ public class Player_Controller : MonoBehaviour
         rb.gravityScale *= -1;
         Rotation();
      }
+
+    // ----------------------------------------------------------------------------------- GameObject : Mort ----------------------------------------------------------------------------------- //
+    // Permet au Joueur de mourir et de respawn
+
+    private IEnumerator Death()
+    {
+        Restart = true;
+        fadeSystem.SetTrigger("FadeIn");
+        yield return new WaitForSeconds(2);
+        isDead = false;
+        Restart = false;
+    }
 
     // ----------------------------------------------------------------------------------- GameObject : Contact Sol ----------------------------------------------------------------------------------- //
     // Permet de vérifier si le Joueur entre en contact avec un sol

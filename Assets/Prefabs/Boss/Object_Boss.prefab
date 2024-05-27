@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3466356114154614870
 Transform:
   m_ObjectHideFlags: 0
@@ -224,7 +224,7 @@ MonoBehaviour:
   enemyBoss: {fileID: 8843631988059586518, guid: 798dd6f378ac00b4f99228ab2198a2fc, type: 3}
   enemy: {fileID: 6490196215212037038, guid: 798dd6f378ac00b4f99228ab2198a2fc, type: 3}
   objectGO: {fileID: 1963711228400094916}
-  rb: {fileID: 2698240169521237886}
+  objectRB: {fileID: 2698240169521237886}
   originalGravity: 10
   positionX: 0
   positionY: 0

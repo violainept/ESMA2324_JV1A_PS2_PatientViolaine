@@ -8,7 +8,7 @@ public class Enemy_behaviour : MonoBehaviour
 {
     // ----------------------------------------------------------------------------------- Propriétés et Variables ----------------------------------------------------------------------------------- //
     
-    public Player_Health playerHealth;
+    public Player_Controller playerHealth;
     public GameObject player;
 
     public float rayCastLength;
@@ -39,7 +39,7 @@ public class Enemy_behaviour : MonoBehaviour
 
     private void Start()
     {
-        playerHealth = player.GetComponent<Player_Health>();
+        playerHealth = player.GetComponent<Player_Controller>();
     }
 
     private void Update()

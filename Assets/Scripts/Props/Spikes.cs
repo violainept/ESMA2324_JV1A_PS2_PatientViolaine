@@ -8,7 +8,7 @@ public class Spikes : MonoBehaviour
     {
         if (other.transform.CompareTag("Player"))
         {
-            Player_Health playerHealth = other.transform.GetComponent<Player_Health>();
+            Player_Controller playerHealth = other.transform.GetComponent<Player_Controller>();
             playerHealth.isDead = true;
         }
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Death_Zone : MonoBehaviour
 {
-    public Player_Health playerHealth;
+    public Player_Controller playerHealth;
     private Transform playerSpawn;
     private Animator fadeSystem;
 
