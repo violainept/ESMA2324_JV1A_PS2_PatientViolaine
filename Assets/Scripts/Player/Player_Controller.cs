@@ -26,8 +26,7 @@ public class Player_Controller : MonoBehaviour
     public bool Restart = false; // Lorsque le Joueur est mort, permet de reset les ennemis
 
     [Header("Contact au Sol")]
-    [SerializeField] private Transform groundCheckLeft;
-    [SerializeField] private Transform groundCheckRight;
+    [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
 
     [Header("Se retourne")]
@@ -122,7 +121,7 @@ public class Player_Controller : MonoBehaviour
     // Permet de vérifier si le Joueur entre en contact avec un sol
     public bool isGrounded()
     {
-        return Physics2D.OverlapArea(groundCheckLeft.position, groundCheckRight.position);
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
 
     // ----------------------------------------------------------------------------------- Visuel/GameObject : Change de sens (gauche/droite) par rapport au sol ----------------------------------------------------------------------------------- //

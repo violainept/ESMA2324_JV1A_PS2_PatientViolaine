@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 1707238367899134122}
   - component: {fileID: 8522725619474732112}
   - component: {fileID: 3992377407442384551}
-  - component: {fileID: 4291161361685159088}
+  - component: {fileID: 3936008054912250684}
   m_Layer: 0
   m_Name: Graphics
   m_TagString: Enemy
@@ -223,7 +223,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &4291161361685159088
+--- !u!114 &3936008054912250684
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -232,11 +232,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6341892395133186782}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32d4fc9bf627390429ea1525603df750, type: 3}
+  m_Script: {fileID: 11500000, guid: 39a4d137d68fbed41ae4f0a5815bf929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  waitDuration: 0
+  sprite: {fileID: 1707238367899134122}
+  speed: 2
   ways: {fileID: 6088407115384937189}
   waypoints:
   - {fileID: 4463697342756185088}
@@ -296,7 +296,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7666149403614141221}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.6853356, y: -2.364, z: 0.0027975636}
   m_LocalScale: {x: 0.79416233, y: 0.79416233, z: 0.79416233}
   m_ConstrainProportionsScale: 0

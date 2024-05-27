@@ -3,24 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-// Script permettant de faire bouger l'objet selon des points donnés et de tuer le Joueur
+// Permet de faire bouger l'objet selon des points donnés et de tuer le Joueur
+
 public class Platform_Trap : MonoBehaviour
 {
+    [Header("GameObject")]
+    private Rigidbody2D rb;
+
+    [Header("Points")]
     private int pointIndex;
     private int pointCount;
-    private int direction = 1;
-
-    private Rigidbody2D rb;
-    private Vector3 moveDirection;
     private Vector3 targetWaypoint;
-
-    [SerializeField] private float speed;
-    [SerializeField] private float waitDuration;
-
     [SerializeField] private GameObject ways;
     [SerializeField] private Transform[] waypoints;
 
+    [Header("Mouvements")]
+    private Vector3 moveDirection;
+    private int direction = 1;
+    [SerializeField] private float speed;
 
+    [Header("Timer")]
+    [SerializeField] private float waitDuration;
 
     private void Awake()
     {
@@ -34,7 +37,6 @@ public class Platform_Trap : MonoBehaviour
         }
     }
 
-    // Définition des variables et propriétés de l'objet
     private void Start()
     {
         pointIndex = 1;
@@ -55,7 +57,6 @@ public class Platform_Trap : MonoBehaviour
         rb.velocity = moveDirection * speed;
     }
 
-    // Si l'objet se rapproche du dernier point, alors il fait demi-tour. Inversement si il arrive au point de départ.
     // Permet de définir le prochain point ciblé et de faire bouger l'objet dans la bonne direction en ayant des temps de pauses entre chaque point
     private void NextPoint()
     {
@@ -77,7 +78,6 @@ public class Platform_Trap : MonoBehaviour
         StartCoroutine(WaitNextPoint());
     }
 
-    // Attends le nombre de secondes defini par la variable puis lance la fonction de calcul de direction
     // Permet de faire attendre quelques secondes la plateforme avant d'aller a un prochain point
     private IEnumerator WaitNextPoint()
     {
@@ -85,7 +85,6 @@ public class Platform_Trap : MonoBehaviour
         DirectionCalculate();
     }
 
-    // Calcul de la distance entre le prochain point et le point actuel
     // Permet de faire bouger l'objet de sa position à la celle du prochain point
 
     private void DirectionCalculate()
@@ -93,7 +92,6 @@ public class Platform_Trap : MonoBehaviour
         moveDirection = (targetWaypoint - transform.position).normalized;
     }
 
-    // Si le Joueur rentre en contact avec l'objet, l'objet appelle la fonction Tuer
     // Permet à l'objet de tuer le Joueur
     private void OnCollisionEnter2D(Collision2D other)
     {

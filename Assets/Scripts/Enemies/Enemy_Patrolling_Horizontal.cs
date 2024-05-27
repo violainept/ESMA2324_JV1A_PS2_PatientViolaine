@@ -3,27 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-// Script permettant de faire bouger l'ennemi selon des points donnés et de tuer le Joueur
+// Permet de faire bouger l'ennemi selon des points donnés et de tuer le Joueur
+
 public class Enemy_Patrolling_Horizontal : MonoBehaviour
 {
-
-    // ----------------------------------------------------------------------------------- Proprietes et Variables ----------------------------------------------------------------------------------- //
-
-
+    [Header("Points")]
     private int pointIndex;
     private int pointCount;
-    private int direction = 1;
-
-    private Rigidbody2D rb;
-    private Vector3 moveDirection;
-    private Vector3 targetWaypoint;
-
-    [SerializeField] private float speed;
-
     [SerializeField] private GameObject ways;
     [SerializeField] private Transform[] waypoints;
 
+    [Header("Mouvements")]
+    private Vector3 moveDirection;
+    private Vector3 targetWaypoint;
+    private int direction = 1;
+    [SerializeField] private float speed;
 
+    [Header("GameObject")]
+    private Rigidbody2D rb;
+    public SpriteRenderer sprite;
 
     private void Awake()
     {
@@ -58,7 +56,6 @@ public class Enemy_Patrolling_Horizontal : MonoBehaviour
     }
 
 
-    // Si l'ennemi se rapproche du dernier point, alors il fait demi-tour. Inversement si il arrive au point de départ.
     // Permet de définir le prochain point ciblé et de faire bouger l'ennemi dans la bonne direction
     private void NextPoint()
     {
@@ -68,11 +65,13 @@ public class Enemy_Patrolling_Horizontal : MonoBehaviour
         if (pointIndex == pointCount - 1)
         {
             direction = -1;
+            sprite.flipX = true;
         }
 
         if (pointIndex == 0)
         {
             direction = 1;
+            sprite.flipX = false;
         }
 
         pointIndex += direction;
@@ -81,7 +80,6 @@ public class Enemy_Patrolling_Horizontal : MonoBehaviour
     }
 
 
-    // Calcul de la distance entre le prochain point et le point actuel
     // Permet de faire bouger l'ennemi de sa position à la celle du prochain point
 
     private void DirectionCalculate()
@@ -89,7 +87,6 @@ public class Enemy_Patrolling_Horizontal : MonoBehaviour
         moveDirection = (targetWaypoint - transform.position).normalized;
     }
 
-    // Si le Joueur rentre en contact avec l'ennemi, l'ennemi appelle la fonction Tuer
     // Permet à l'ennemi de tuer le Joueur
     private void OnCollisionEnter2D(Collision2D other)
     {

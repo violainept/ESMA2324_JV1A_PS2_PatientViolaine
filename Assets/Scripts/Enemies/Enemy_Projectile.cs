@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Enemy_Projectile : MonoBehaviour
 {
-    // ----------------------------------------------------------------------------------- Propriétés et Variables ----------------------------------------------------------------------------------- //
-
+    [Header("GameObject")]
     public GameObject player;
     private Rigidbody2D rb;
 
+    [Header("GameObject")]
     public float force;
     private float timer;
 
@@ -16,7 +16,6 @@ public class Enemy_Projectile : MonoBehaviour
     // Permet de faire bouger le projectile
     void Start()
     {
-        
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
         Vector3 direction = player.transform.position - transform.position;
@@ -37,7 +36,7 @@ public class Enemy_Projectile : MonoBehaviour
         }
     }
 
-    // Lorsque le Joueur entre en contact avec la boxCollider, il meurt et le projectile est detruit
+    // Lorsque le Joueur entre en contact avec le projectile, il meurt et le projectile est detruit
     void OnTriggerEnter2D(Collider2D other)
     {
        if (other.gameObject.CompareTag("Player"))

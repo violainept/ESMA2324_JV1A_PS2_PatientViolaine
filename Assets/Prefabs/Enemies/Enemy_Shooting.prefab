@@ -175,6 +175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87eda4b875f6c2845ba5b452e431d199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDeath: {fileID: 0}
-  projectile: {fileID: 7947043050394304582, guid: f1d2cc5c7360e104c861dd45e7e45a52, type: 3}
+  playerHealth: {fileID: 1944864161531303559, guid: 0ee471bbb92c4d44ea40f53e5fa06912, type: 3}
+  projectile: {fileID: 4968899853771056763, guid: f1d2cc5c7360e104c861dd45e7e45a52, type: 3}
   projectilePos: {fileID: 4206937288894445000}

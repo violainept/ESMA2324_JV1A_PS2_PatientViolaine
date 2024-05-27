@@ -5,9 +5,12 @@ using UnityEngine;
 // Permet a l'ennemi de changer de gravité sur un temps defini 
 public class Enemy_Patrolling_Vertical : MonoBehaviour
 {
+    [Header("GameObject")]
+    [SerializeField] private Rigidbody2D rb;
+
+    [Header("Detection")]
     private bool top;
 
-    [SerializeField] private Rigidbody2D rb;
     public void Update()
     {
         if (top)
@@ -21,6 +24,7 @@ public class Enemy_Patrolling_Vertical : MonoBehaviour
         }
     }
 
+    // Permet de desactiver la gravite au bout d'un certain temps
     public IEnumerator gravityDesactivated()
     {
         rb.gravityScale = -10;
@@ -28,6 +32,7 @@ public class Enemy_Patrolling_Vertical : MonoBehaviour
         top = false;
     }
 
+    // Permet d'activer la gravite au bout d'un certain temps
     public IEnumerator gravityActivated()
     {
         rb.gravityScale = 10;
@@ -35,6 +40,7 @@ public class Enemy_Patrolling_Vertical : MonoBehaviour
         top = true;
     }
 
+    // Permet de tuer le Joueur s'il rentre en contact avec l'ennemi
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))

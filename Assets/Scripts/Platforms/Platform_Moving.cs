@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Permet de faire bouger une plateforme
+
 public class Platform_Moving : MonoBehaviour
 {
+    [Header("Points")]
     public Transform posA, posB;
-    public float speed;
     Vector3 targetPos;
+
+    [Header("Vitesse")]
+    public float speed;
 
     private void Start()
     {
@@ -28,6 +33,7 @@ public class Platform_Moving : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
     }
 
+    // Si le Joueur entre en contact, il devient enfant du GameObject
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -35,6 +41,8 @@ public class Platform_Moving : MonoBehaviour
             collision.transform.parent = this.transform;
         }
     }
+
+    // Si le Joueur s'en va, il n'est plus enfant du GameObject
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))

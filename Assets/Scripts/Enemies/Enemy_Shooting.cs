@@ -2,16 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Permet que l'ennemi tire en direction du Joueur
+// Permet a l'ennemi de tirer en direction du Joueur
+
 public class Enemy_Shooting : MonoBehaviour
 {
+    [Header("Autres")]
     public Player_Controller playerHealth;
-
     private GameObject player;
 
+    [Header("GameObject")]
     public GameObject projectile;
     public Transform projectilePos;
 
+    [Header("Timer")]
     private float timer;
 
     private void Start()

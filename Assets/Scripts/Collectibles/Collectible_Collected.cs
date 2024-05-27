@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+// Permet de recuperer le collectible et de le detruire
+
 public class Collectible_Collected : MonoBehaviour
 {
     public bool isCollected = false;

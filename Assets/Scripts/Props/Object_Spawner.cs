@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//Permet de faire apparaitre l'objet au debut et si detruit
+// Permet de faire apparaitre l'objet au debut et si detruit
 public class Object_Spawner : MonoBehaviour
 {
+    [Header("GameObject")]
     public GameObject prefab;
+
+    [Header("Position")]
     public Transform spawnPoint;
 
     private void Start()

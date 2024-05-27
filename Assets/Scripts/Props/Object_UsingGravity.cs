@@ -5,23 +5,23 @@ using UnityEngine;
 //Permet d'avoir un objet qui change de gravité lorsque le Joueur appuie sur F et se détruit si contact avec quelque chose de mortel (ennemi, pieges...)
 public class Object_UsingGravity : MonoBehaviour
 {
-    // Autres GameObject/script
+    [Header("Autres")]
     public Object_Spawner objectSpawner;
     public GameObject spawner;
 
-    // GameObject
+    [Header("GameObject")]
     public Rigidbody2D rb;
     private Vector2 originalPosition;
 
-    // Gravite
+    [Header("Inverser gravite")]
     private bool canChangeGravity = false;
     [SerializeField] private float originalGravity;
 
-    // Cordonnees
+    [Header("Position")]
     [SerializeField] private float positionX;
     [SerializeField] private float positionY;
 
-    // Contact avec le sol
+    [Header("Contact au sol")]
     [SerializeField] private Transform groundCheckLeft;
     [SerializeField] private Transform groundCheckRight;
     [SerializeField] private LayerMask groundLayer;
