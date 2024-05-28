@@ -17,6 +17,9 @@ public class Enemy_Shooting : MonoBehaviour
     [Header("Timer")]
     private float timer;
 
+    [Header("Distance")]
+    public float playerDistance;
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -29,7 +32,7 @@ public class Enemy_Shooting : MonoBehaviour
         {
             float distance = Vector2.Distance(transform.position, player.transform.position);
 
-            if (distance < 10)
+            if (distance < playerDistance)
             {
                 timer += Time.deltaTime;
 

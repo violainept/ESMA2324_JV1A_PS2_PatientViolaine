@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//Permet d'avoir un objet qui change de gravité lorsque le Joueur appuie sur F et se détruit si contact avec quelque chose de mortel (ennemi, pieges...)
+//Permet d'avoir un objet qui change de gravite lorsque le Joueur appuie sur F et se détruit si contact avec quelque chose de mortel (ennemi, pieges...)
+
 public class Object_UsingGravity : MonoBehaviour
 {
     [Header("Autres")]
@@ -66,7 +67,6 @@ public class Object_UsingGravity : MonoBehaviour
         rb.gravityScale = originalGravity;
         Rotation();
     }
-
 
     public bool isGrounded()
     {

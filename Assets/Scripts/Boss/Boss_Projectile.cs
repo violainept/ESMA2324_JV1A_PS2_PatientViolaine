@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Projectile : MonoBehaviour
+public class Boss_Projectile : MonoBehaviour
 {
     [Header("GameObject")]
     public GameObject player;
@@ -28,8 +28,8 @@ public class Enemy_Projectile : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        
-        if (timer > 10)
+
+        if (timer > 4)
         {
             Destroy(gameObject);
         }
@@ -38,7 +38,7 @@ public class Enemy_Projectile : MonoBehaviour
     // Lorsque le Joueur entre en contact avec le projectile, il meurt et le projectile est detruit
     void OnTriggerEnter2D(Collider2D other)
     {
-       if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             other.gameObject.GetComponent<Player_Controller>().isDead = true;
             Destroy(gameObject);

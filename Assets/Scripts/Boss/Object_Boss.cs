@@ -3,26 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Permet d'avoir un objet qui change de gravité lorsque le Joueur appuie sur F et se détruit si contact avec quelque chose de mortel (ennemi, pieges...)
-public class Object_UsingGravity_Boss : MonoBehaviour
+public class Object_Boss : MonoBehaviour
 {
-    // Autres GameObject/script
-    public Object_Spawner_Boss wall;
-    public GameObject wallGO; // "wallGO" signifie "wallGameObject"
+    [Header("Autres")]
+    public Spawner_Object_Boss objectSpawner;
+    public GameObject objectSpawnerGO; // "wallGO" signifie "wallGameObject"
+    public Boss_Brain bossBrain;
+    public GameObject boss;
 
-    // GameObject
-    public GameObject objectGO;
+    [Header("GameObject")]
     public Rigidbody2D objectRB;
     private Vector2 originalPosition;
 
-    // Gravite
+    [Header("Inverser gravite")]
     private bool canChangeGravity = false;
     [SerializeField] private float originalGravity;
 
-    // Cordonnees
+    [Header("Position")]
     [SerializeField] private float positionX;
     [SerializeField] private float positionY;
 
-    // Contact avec le sol
+    [Header("Contact au sol")]
     [SerializeField] private Transform groundCheckLeft;
     [SerializeField] private Transform groundCheckRight;
     [SerializeField] private LayerMask groundLayer;
@@ -30,7 +31,8 @@ public class Object_UsingGravity_Boss : MonoBehaviour
     private void Start()
     {
         originalPosition = new Vector2(positionX, positionY);
-        wall = wallGO.GetComponent<Object_Spawner_Boss>();
+        objectSpawner = objectSpawnerGO.GetComponent<Spawner_Object_Boss>();
+        bossBrain = boss.GetComponent<Boss_Brain>();
     }
     private void Update()
     {
@@ -39,19 +41,31 @@ public class Object_UsingGravity_Boss : MonoBehaviour
             changeGravity();
         }
     }
+
+    // Permet de changer sa gravite si le Joueur interagit ou de se detruire si contact avec quelque chose de dangereux
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player")) // Permet au Joueur d'interagir
         {
             canChangeGravity = true;
+            other.enabled = true;
         }
 
-        if (other.CompareTag("DeadlyProps"))
+        if (other.CompareTag("Boss")) // Permet de faire des degats au Boss
         {
             Contact();
-            wall.canDestroy = true;
+            objectSpawner.canDestroy = true;
+            bossBrain.TakeDamage();
+        }
+
+        if (other.CompareTag("DeadlyProps")) // Permet de se detruire si autres contacts dangereux
+        {
+            Contact();
+            objectSpawner.canDestroy = true;
         }
     }
+
+    // Permet d'empecher le Joueur d'interagir si trop eloigne
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.transform.CompareTag("Player"))
@@ -60,11 +74,14 @@ public class Object_UsingGravity_Boss : MonoBehaviour
         }
     }
 
+    // Permet de desactiver l'objet
     public void Contact()
     {
-        objectGO.SetActive(false);
-        objectGO.transform.position = originalPosition;
+        gameObject.SetActive(false);
+        gameObject.transform.position = originalPosition;
     }
+
+    // Permet de changer la gravite de l'objet
     private void changeGravity()
     {
         originalGravity = -originalGravity;
@@ -72,10 +89,13 @@ public class Object_UsingGravity_Boss : MonoBehaviour
         Rotation();
     }
 
+    // Permet de verifier si contact avec le sol
     public bool isGrounded()
     {
         return Physics2D.OverlapArea(groundCheckLeft.position, groundCheckRight.position);
     }
+
+    // Permet de retourner l'objet
     private void Rotation()
     {
         Vector3 ScalerUP = transform.localScale;

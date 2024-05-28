@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-// Script uses with buttons from the Main Menu.
+
+// Permet de rendre fonctionnel le Menu Principal
 public class MainMenu : MonoBehaviour
 {
-    // When the Player clicks on the Play Button, it plays scene n°1
+    // Permet de lancer le jeu
     public void PlayGame()
     {
         SceneManager.LoadSceneAsync(1);
     }
 
-    // When the Player clicks on the Quit Button, it closes the game
+    // Permet de quitter le jeu
     public void QuitGame()
     {
 #if UNITY_EDITOR

@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Permet de donner un effet de parallaxe
 public class Parallax_Effect : MonoBehaviour
 {
+    [Header("Parametres")]
     private float length, startpos;
     public GameObject cam;
     public float parallaxEffect;

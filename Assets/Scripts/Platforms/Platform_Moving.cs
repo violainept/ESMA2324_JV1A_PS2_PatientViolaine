@@ -6,12 +6,19 @@ using UnityEngine;
 
 public class Platform_Moving : MonoBehaviour
 {
+    [Header("Autre")]
+    public Rigidbody2D playerRB;
+
+    [Header("GameObject")]
+    public Rigidbody2D platformRB;
+
     [Header("Points")]
     public Transform posA, posB;
     Vector3 targetPos;
 
     [Header("Vitesse")]
     public float speed;
+
 
     private void Start()
     {

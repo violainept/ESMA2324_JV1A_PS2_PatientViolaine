@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Permet de suivre le Joueur avec la camera
 public class Camera_Follow : MonoBehaviour
 {
     private Vector3 offset = new Vector3(0f, 0f, -10f);

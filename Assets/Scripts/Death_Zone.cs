@@ -6,12 +6,6 @@ public class Death_Zone : MonoBehaviour
 {
     public Player_Controller playerHealth;
     private Transform playerSpawn;
-    private Animator fadeSystem;
-
-    private void Awake()
-    {
-        fadeSystem = GameObject.FindGameObjectWithTag("FadeSystem").GetComponent<Animator>();
-    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -20,6 +14,5 @@ public class Death_Zone : MonoBehaviour
             playerHealth.isDead = true;
         }
     }
-
 
 }

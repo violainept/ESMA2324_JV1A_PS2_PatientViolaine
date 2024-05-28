@@ -4,11 +4,13 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Permet de rendre fonctionnel le Menu pause
 public class Menu_Pause : MonoBehaviour
 {
+    [Header("Parametres")]
+    public GameObject pauseMenuUI;
     public static bool GameIsPaused = false;
     public string sceneName;
-    public GameObject pauseMenuUI;
 
     private void Update()
     {
@@ -25,6 +27,7 @@ public class Menu_Pause : MonoBehaviour
         }
     }
 
+    // Permet de relancer le jeu
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
@@ -32,6 +35,7 @@ public class Menu_Pause : MonoBehaviour
         GameIsPaused = false;
     }
 
+    // Permet de mettre sur pause le jeu
     public void Pause()
     {
         pauseMenuUI.SetActive(true);
@@ -39,12 +43,14 @@ public class Menu_Pause : MonoBehaviour
         GameIsPaused = true;
     }
 
+    // Permet de revenir au Menu
     public void LoadMenu()
     {
         SceneManager.LoadScene(sceneName);
         GameIsPaused = false;
     }
 
+    // Permet de quitter le jeu
     public void QuitGame()
     {
 #if UNITY_EDITOR

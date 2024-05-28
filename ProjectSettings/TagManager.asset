@@ -10,6 +10,7 @@ TagManager:
   - PlayerSpawn
   - Object
   - DeadlyProps
+  - Boss
   layers:
   - Default
   - TransparentFX

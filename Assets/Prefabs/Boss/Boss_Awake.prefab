@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8717159671253348504
+--- !u!1 &848212163525750723
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,38 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6581751402173103533}
-  - component: {fileID: 7110409964274958989}
-  - component: {fileID: 4833784784662366716}
+  - component: {fileID: 7919952422088335647}
+  - component: {fileID: 348834589637810264}
+  - component: {fileID: 3414596002228830483}
   m_Layer: 0
-  m_Name: Death_Zone
-  m_TagString: DeadlyProps
+  m_Name: Boss_Awake
+  m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6581751402173103533
+--- !u!4 &7919952422088335647
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8717159671253348504}
+  m_GameObject: {fileID: 848212163525750723}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.03, y: 2.5246968, z: -0.08710489}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.43, y: -5.82, z: 0.09199926}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &7110409964274958989
+--- !u!61 &348834589637810264
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8717159671253348504}
+  m_GameObject: {fileID: 848212163525750723}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -65,7 +65,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 14.146771, y: -2.0523245}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -76,18 +76,19 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 30.491522, y: 5.1730647}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4833784784662366716
+--- !u!114 &3414596002228830483
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8717159671253348504}
+  m_GameObject: {fileID: 848212163525750723}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 690040ddf670afc4ebfc5f696634592a, type: 3}
+  m_Script: {fileID: 11500000, guid: bad5b7a35bed4aa44a188274e4316298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealth: {fileID: 0}
+  Boss: {fileID: 7657150682253573565, guid: a16834dcb14ad7a4dbb39f40d3c38517, type: 3}
+  BossGO: {fileID: 6490196215212037038, guid: a16834dcb14ad7a4dbb39f40d3c38517, type: 3}

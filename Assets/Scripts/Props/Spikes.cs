@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Permet de tuer le Joueur s'il rentre en contact avec
+
 public class Spikes : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D other)

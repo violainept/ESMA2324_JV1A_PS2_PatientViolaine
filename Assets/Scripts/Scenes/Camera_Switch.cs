@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Permet de changer la camera principale avec une autre
 public class Camera_Switch : MonoBehaviour
 {
+    [Header("Cameras")]
     public GameObject mainCam;
     public GameObject staticCam;
 

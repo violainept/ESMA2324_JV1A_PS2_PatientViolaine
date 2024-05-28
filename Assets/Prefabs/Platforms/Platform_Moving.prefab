@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 2374052099028998658}
   - component: {fileID: 2880571740727889714}
   - component: {fileID: 5639368046747973724}
+  - component: {fileID: 7518890551175629540}
   m_Layer: 0
   m_Name: Platform_Moving
   m_TagString: Untagged
@@ -285,6 +286,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 150ba7c5a1ff12a4cad0f065eade2d43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRB: {fileID: 252780730328185709, guid: 0ee471bbb92c4d44ea40f53e5fa06912, type: 3}
+  platformRB: {fileID: 7518890551175629540}
   posA: {fileID: 707495443111957797}
   posB: {fileID: 6947961392824329030}
   speed: 2
+--- !u!50 &7518890551175629540
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6426661168207475427}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

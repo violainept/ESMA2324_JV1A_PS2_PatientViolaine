@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Permet d'activer ou desactiver l'objet et de changer sa position
-public class Object_Spawner_Boss : MonoBehaviour
+public class Spawner_Object_Boss : MonoBehaviour
 {
     public GameObject objectGO; // "objectGO" pour "objectGameObject"
     public bool canDestroy = true;

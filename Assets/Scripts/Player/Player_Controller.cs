@@ -6,6 +6,9 @@ public class Player_Controller : MonoBehaviour
 {
     // ----------------------------------------------------------------------------------- Proprietes et Variables ----------------------------------------------------------------------------------- //
 
+    [Header("Autre")]
+    public Transform playerSpawn;
+
     [Header("GameObject")]
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider;
@@ -21,7 +24,6 @@ public class Player_Controller : MonoBehaviour
     private float maxGravity = 2;
 
     [Header("Mort")]
-    private Animator fadeSystem;
     public bool isDead = false;
     public bool Restart = false; // Lorsque le Joueur est mort, permet de reset les ennemis
 
@@ -34,7 +36,7 @@ public class Player_Controller : MonoBehaviour
 
     private void Awake()
     {
-        fadeSystem = GameObject.FindGameObjectWithTag("FadeSystem").GetComponent<Animator>();
+        playerSpawn = GameObject.FindGameObjectWithTag("PlayerSpawn").transform;
     }
 
     void Start()
@@ -49,7 +51,7 @@ public class Player_Controller : MonoBehaviour
 
         if (isDead)
         {
-            StartCoroutine(Death());
+            Die();
         }
 
         if (!isDead)
@@ -108,13 +110,30 @@ public class Player_Controller : MonoBehaviour
     // ----------------------------------------------------------------------------------- GameObject : Mort ----------------------------------------------------------------------------------- //
     // Permet au Joueur de mourir et de respawn
 
-    private IEnumerator Death()
+    private void Die()
+    {
+        Debug.Log("Dead");
+        //animator.SetTrigger("Die");
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        rb.velocity = Vector3.zero;
+        boxCollider.enabled = false;
+        Respawn();
+    }
+
+    // ----------------------------------------------------------------------------------- GameObject : Respawn ----------------------------------------------------------------------------------- //
+    // Permet de refaire apparaitre le joueur
+    public void Respawn()
     {
         Restart = true;
-        fadeSystem.SetTrigger("FadeIn");
-        yield return new WaitForSeconds(2);
+
+        transform.position = playerSpawn.position;
+        //animator.SetTrigger("Respawn");
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        boxCollider.enabled = true;
         isDead = false;
+
         Restart = false;
+
     }
 
     // ----------------------------------------------------------------------------------- GameObject : Contact Sol ----------------------------------------------------------------------------------- //
@@ -143,7 +162,6 @@ public class Player_Controller : MonoBehaviour
     // Permet au Joueur d'avoir une rotation lorsqu'il utilise la mécanique d'inverser la gravité
     private void Rotation()
     {
-
         Vector3 ScalerUP = transform.localScale;
         ScalerUP.y *= -1;
         transform.localScale = ScalerUP;
