@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Boss_Awake : MonoBehaviour
 {
-    public Boss_Brain enemyBoss;
+    private Boss_Brain enemyBoss;
     public GameObject enemy;
 
     private void Start()

@@ -11,11 +11,11 @@ public class Boss_Brain : MonoBehaviour
     [Header("Autres")]
     public Player_Controller playerController;
     public Spawner_Object_Boss objectSpawner;
-    private Object_Boss objectBoss;
     public Transform player;
     public Rigidbody2D playerRB; // "playerRB" signifie "playerRigidBody"
     public GameObject objectGO; // "objectGO" signifie "objectGameObject"
     public GameObject bossAwakeGO;
+    private Object_Boss objectBoss;
 
     [Header("GameObject")]
     public Rigidbody2D bossRB; // "bossRB" signifie "bossRigidBody"
@@ -23,7 +23,6 @@ public class Boss_Brain : MonoBehaviour
     public BoxCollider2D hitbox;
     public BoxCollider2D boxCollider;
     private Boss_Attack bossAttack;
-    private Vector2 originalPosition;
 
     [Header("Cours")]
     public float speed;
@@ -42,8 +41,6 @@ public class Boss_Brain : MonoBehaviour
 
     private void Start()
     {
-        originalPosition = new Vector2(0, 0);
-
         objectBoss = objectGO.GetComponent<Object_Boss>();
         bossAttack = GetComponent<Boss_Attack>();
     }
@@ -54,10 +51,7 @@ public class Boss_Brain : MonoBehaviour
         if (playerController.isDead)
         {
             isActivate = false;
-            if (playerController.Restart)
-            {
-                Reset();
-            }
+            Reset();
         }
 
         if (isActivate)
@@ -143,11 +137,10 @@ public class Boss_Brain : MonoBehaviour
     // Permet de reset le Boss
     private void Reset()
     {
+        bossAwakeGO.SetActive(true);
         isActivate = false;
-        transform.position = originalPosition;
         timerSpecialAttack = 0;
         health = 9;
-        bossAwakeGO.SetActive(true);
     }
 
     // Permet au Boss de regarder dans la direction du Joueur

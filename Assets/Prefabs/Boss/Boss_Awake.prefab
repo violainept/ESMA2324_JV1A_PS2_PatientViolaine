@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &848212163525750723
+--- !u!1 &3564251692575294703
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7919952422088335647}
-  - component: {fileID: 348834589637810264}
-  - component: {fileID: 3414596002228830483}
+  - component: {fileID: 394049987270051014}
+  - component: {fileID: 3290771656380218436}
+  - component: {fileID: 7289481959809160687}
   m_Layer: 0
   m_Name: Boss_Awake
   m_TagString: Untagged
@@ -18,28 +18,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7919952422088335647
+--- !u!4 &394049987270051014
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 848212163525750723}
+  m_GameObject: {fileID: 3564251692575294703}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.43, y: -5.82, z: 0.09199926}
+  m_LocalPosition: {x: -2.43, y: -5.879, z: 0.09199926}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &348834589637810264
+--- !u!61 &3290771656380218436
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 848212163525750723}
+  m_GameObject: {fileID: 3564251692575294703}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -78,17 +78,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &3414596002228830483
+--- !u!114 &7289481959809160687
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 848212163525750723}
+  m_GameObject: {fileID: 3564251692575294703}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bad5b7a35bed4aa44a188274e4316298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Boss: {fileID: 7657150682253573565, guid: a16834dcb14ad7a4dbb39f40d3c38517, type: 3}
-  BossGO: {fileID: 6490196215212037038, guid: a16834dcb14ad7a4dbb39f40d3c38517, type: 3}
+  enemyBoss: {fileID: 5098982493524554249, guid: a16834dcb14ad7a4dbb39f40d3c38517, type: 3}
+  enemy: {fileID: 2733713391038743780, guid: a16834dcb14ad7a4dbb39f40d3c38517, type: 3}

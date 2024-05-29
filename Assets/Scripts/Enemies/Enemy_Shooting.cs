@@ -7,7 +7,7 @@ using UnityEngine;
 public class Enemy_Shooting : MonoBehaviour
 {
     [Header("Autres")]
-    public Player_Controller playerHealth;
+    public Player_Controller playerController;
     private GameObject player;
 
     [Header("GameObject")]
@@ -28,19 +28,16 @@ public class Enemy_Shooting : MonoBehaviour
     // Permet a l'ennemi de tirer en direction du Joueur
     private void Update()
     {
-        if (playerHealth.isDead == false)
+        float distance = Vector2.Distance(transform.position, player.transform.position);
+
+        if (distance < playerDistance)
         {
-            float distance = Vector2.Distance(transform.position, player.transform.position);
+            timer += Time.deltaTime;
 
-            if (distance < playerDistance)
+            if (timer > 2)
             {
-                timer += Time.deltaTime;
-
-                if (timer > 2)
-                {
-                    timer = 0;
-                    Shoot();
-                }
+                timer = 0;
+                Shoot();
             }
         }
     }

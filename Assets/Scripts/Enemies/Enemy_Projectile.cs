@@ -40,7 +40,7 @@ public class Enemy_Projectile : MonoBehaviour
     {
        if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<Player_Controller>().isDead = true;
+            other.gameObject.GetComponent<Player_Controller>().Die();
             Destroy(gameObject);
         }
     }

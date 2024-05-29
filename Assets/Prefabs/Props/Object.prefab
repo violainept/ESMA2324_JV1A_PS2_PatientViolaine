@@ -291,4 +291,4 @@ MonoBehaviour:
   groundCheckRight: {fileID: 8227804570310384484}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64

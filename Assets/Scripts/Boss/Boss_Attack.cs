@@ -6,7 +6,8 @@ using UnityEngine.Timeline;
 public class Boss_Attack : MonoBehaviour
 {
     [Header("Autres")]
-    public Player_Controller playerController;
+    private Player_Controller playerController;
+    public GameObject playerGO;
     public Transform player;
     public Rigidbody2D playerRB; // "playerRB" signifie "playerRigidBody"
 
@@ -40,6 +41,7 @@ public class Boss_Attack : MonoBehaviour
     private void Start()
     {
         bossBrain = GetComponent<Boss_Brain>();
+        playerController = playerGO.GetComponent<Player_Controller>();
     }
     // Permet au Boss de tirer (si Joueur au plafond)
     public void Shooting()
@@ -171,7 +173,7 @@ public class Boss_Attack : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            playerController.isDead = true;
+            playerController.Die();
         }
     }
 

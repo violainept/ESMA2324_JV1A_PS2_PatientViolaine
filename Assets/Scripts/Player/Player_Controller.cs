@@ -7,12 +7,11 @@ public class Player_Controller : MonoBehaviour
     // ----------------------------------------------------------------------------------- Proprietes et Variables ----------------------------------------------------------------------------------- //
 
     [Header("Autre")]
-    public Transform playerSpawn;
+    private Transform playerSpawn;
 
     [Header("GameObject")]
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     private BoxCollider2D boxCollider;
-    private SpriteRenderer spriteRenderer;
 
     [Header("Mouvements")]
     private float horizontal;
@@ -24,8 +23,9 @@ public class Player_Controller : MonoBehaviour
     private float maxGravity = 2;
 
     [Header("Mort")]
-    public bool isDead = false;
-    public bool Restart = false; // Lorsque le Joueur est mort, permet de reset les ennemis
+    public bool isDead;
+    private float timerDelayDeath;
+    private Vector2 originalScale;
 
     [Header("Contact au Sol")]
     [SerializeField] private Transform groundCheck;
@@ -43,6 +43,7 @@ public class Player_Controller : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
+        originalScale = new Vector2(0.5937178f, 0.5937178f);
     }
 
     void Update()
@@ -110,30 +111,32 @@ public class Player_Controller : MonoBehaviour
     // ----------------------------------------------------------------------------------- GameObject : Mort ----------------------------------------------------------------------------------- //
     // Permet au Joueur de mourir et de respawn
 
-    private void Die()
+    public void Die()
     {
-        Debug.Log("Dead");
+        isDead = true;
         //animator.SetTrigger("Die");
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.velocity = Vector3.zero;
         boxCollider.enabled = false;
-        Respawn();
+        timerDelayDeath += Time.deltaTime;
+
+        if (timerDelayDeath > 2)
+        {
+            timerDelayDeath = 0;
+            Respawn();
+        }
     }
 
     // ----------------------------------------------------------------------------------- GameObject : Respawn ----------------------------------------------------------------------------------- //
     // Permet de refaire apparaitre le joueur
     public void Respawn()
     {
-        Restart = true;
-
         transform.position = playerSpawn.position;
         //animator.SetTrigger("Respawn");
         rb.bodyType = RigidbodyType2D.Dynamic;
+        transform.localScale = originalScale;
         boxCollider.enabled = true;
         isDead = false;
-
-        Restart = false;
-
     }
 
     // ----------------------------------------------------------------------------------- GameObject : Contact Sol ----------------------------------------------------------------------------------- //

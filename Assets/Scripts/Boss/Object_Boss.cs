@@ -6,9 +6,9 @@ using UnityEngine;
 public class Object_Boss : MonoBehaviour
 {
     [Header("Autres")]
-    public Spawner_Object_Boss objectSpawner;
+    private Spawner_Object_Boss objectSpawner;
+    private Boss_Brain bossBrain;
     public GameObject objectSpawnerGO; // "wallGO" signifie "wallGameObject"
-    public Boss_Brain bossBrain;
     public GameObject boss;
 
     [Header("GameObject")]

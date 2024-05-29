@@ -172,11 +172,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3be47f0e041bf41b462915c123da88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpawn: {fileID: 3231127636673509286}
+  rb: {fileID: 0}
   currentGravity: 2
   canTriggerGravity: 1
   isDead: 0
-  Restart: 0
   groundCheck: {fileID: 5327942198567993930}
   groundLayer:
     serializedVersion: 2

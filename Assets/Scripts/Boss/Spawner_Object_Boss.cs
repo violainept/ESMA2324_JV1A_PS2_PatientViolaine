@@ -10,7 +10,7 @@ public class Spawner_Object_Boss : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Enemy") && canDestroy)
+        if (other.gameObject.CompareTag("Boss") && canDestroy)
         {
             Spawn();
             canDestroy = false;

@@ -92,8 +92,8 @@ public class Enemy_Patrolling_Horizontal : MonoBehaviour
     {
         if (other.transform.CompareTag("Player"))
         {
-            Player_Controller playerHealth = other.transform.GetComponent<Player_Controller>();
-            playerHealth.isDead = true;
+            Player_Controller player = other.transform.GetComponent<Player_Controller>();
+            player.Die();
         }
     }
 }

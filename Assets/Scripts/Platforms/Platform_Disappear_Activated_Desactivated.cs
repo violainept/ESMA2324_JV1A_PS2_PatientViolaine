@@ -22,12 +22,9 @@ public class Platform_Disappear_Activated_Desactivated : MonoBehaviour
     // Permet de faire disparaitre la plateforme, d'attendre puis de la refaire apparaitre
     private IEnumerator PlatformSystem()
     {
-        anim.SetBool("isDisapearring", true);
         yield return new WaitForSeconds(shakingTime);
         platform.SetActive(false);
-        Debug.Log("I'm desactivated");
         yield return new WaitForSeconds(disappearingTime);
-        Debug.Log("I'm activated");
         platform.SetActive(true);
     }
 }

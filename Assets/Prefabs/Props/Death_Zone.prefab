@@ -90,4 +90,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 690040ddf670afc4ebfc5f696634592a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealth: {fileID: 0}
+  player: {fileID: 1944864161531303559, guid: 0ee471bbb92c4d44ea40f53e5fa06912, type: 3}

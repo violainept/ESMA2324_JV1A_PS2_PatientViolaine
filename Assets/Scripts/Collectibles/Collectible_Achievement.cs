@@ -7,7 +7,8 @@ using UnityEngine;
 public class Collectible_Achievement : MonoBehaviour
 {
     [Header("Autre")]
-    public Collectible_Collected collectible;
+    private Collectible_Collected collectibleCollected;
+    public GameObject collectible;
 
     [Header("GameObject")]
     public Animator anim;
@@ -15,11 +16,12 @@ public class Collectible_Achievement : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
+        collectibleCollected = collectible.GetComponent<Collectible_Collected>();
     }
 
     private void Update()
     {
-        if (collectible.isCollected == true)
+        if (collectibleCollected.isCollected == true)
         {
             anim.SetTrigger("isCollected");
         }
