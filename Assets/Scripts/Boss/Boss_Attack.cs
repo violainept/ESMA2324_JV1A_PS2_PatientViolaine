@@ -7,7 +7,7 @@ public class Boss_Attack : MonoBehaviour
 {
     [Header("Autres")]
     private Player_Controller playerController;
-    public GameObject playerGO;
+    private GameObject playerGO;
     public Transform player;
     public Rigidbody2D playerRB; // "playerRB" signifie "playerRigidBody"
 
@@ -38,6 +38,13 @@ public class Boss_Attack : MonoBehaviour
     private bool deathZone2AlreadyActivated;
     private float timerDeathZone;
 
+    private void Awake()
+    {
+        playerGO = GameObject.FindGameObjectWithTag("Player");
+        playerRB = playerGO.GetComponent<Rigidbody2D>();
+        player = playerGO.transform;
+
+    }
     private void Start()
     {
         bossBrain = GetComponent<Boss_Brain>();

@@ -13,6 +13,7 @@ public class Boss_Brain : MonoBehaviour
     public Spawner_Object_Boss objectSpawner;
     public Transform player;
     public Rigidbody2D playerRB; // "playerRB" signifie "playerRigidBody"
+    private GameObject playerGO;
     public GameObject objectGO; // "objectGO" signifie "objectGameObject"
     public GameObject bossAwakeGO;
     private Object_Boss objectBoss;
@@ -38,6 +39,13 @@ public class Boss_Brain : MonoBehaviour
     [Header("Se retourne")]
     public bool isFlipped = false;
 
+    private void Awake()
+    {
+        playerGO = GameObject.FindGameObjectWithTag("Player");
+        playerRB = playerGO.GetComponent<Rigidbody2D>();
+        player = playerGO.transform;
+
+    }
 
     private void Start()
     {
