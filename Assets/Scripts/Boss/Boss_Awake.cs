@@ -16,7 +16,6 @@ public class Boss_Awake : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Debug.Log("Player detected");
-            enemyBoss.isActivate = true;
             gameObject.SetActive(false);
         }
     }

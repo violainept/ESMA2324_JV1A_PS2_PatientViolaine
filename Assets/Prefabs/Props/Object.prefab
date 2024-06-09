@@ -93,7 +93,7 @@ Transform:
   m_GameObject: {fileID: 9183292811420190931}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -4.546, y: 6.921, z: -0.22961012}
   m_LocalScale: {x: 1.241795, y: 1.241795, z: 1.241795}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -304,11 +304,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectSpawner: {fileID: 3222967428175472648, guid: ee969e03d0731f94a807b62426667e18, type: 3}
-  spawner: {fileID: 243374678707506805, guid: ee969e03d0731f94a807b62426667e18, type: 3}
   rb: {fileID: 4702620019503286633}
   originalGravity: 10
-  positionX: 12.51
-  positionY: 5.562
   groundCheckLeft: {fileID: 4459990081079869825}
   groundCheckRight: {fileID: 8227804570310384484}
   groundLayer:

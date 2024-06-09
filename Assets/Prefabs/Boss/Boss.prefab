@@ -100,7 +100,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2733713391038743780}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -152,21 +152,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc817a392de9ed47a5e3e6c87b91d3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActivate: 0
   playerController: {fileID: 1944864161531303559, guid: 0ee471bbb92c4d44ea40f53e5fa06912, type: 3}
   objectSpawner: {fileID: 6915201737149927389, guid: 6ffa5fb0faa820c48b6040abbff5490b, type: 3}
   player: {fileID: 3231127636673509286, guid: 0ee471bbb92c4d44ea40f53e5fa06912, type: 3}
   playerRB: {fileID: 252780730328185709, guid: 0ee471bbb92c4d44ea40f53e5fa06912, type: 3}
   objectGO: {fileID: 6927644551632378237, guid: 969a7550c313464478581a945d56435c, type: 3}
-  bossAwakeGO: {fileID: 3564251692575294703, guid: 69375f8dbdfd4ba43968a92c31528966, type: 3}
+  panelCredits: {fileID: 0}
   bossRB: {fileID: 4365776250309732247}
   graphics: {fileID: 2968129695462763293}
   hitbox: {fileID: 7335952085253645114}
   boxCollider: {fileID: 9066163522432539044}
-  anim: {fileID: 0}
+  anim: {fileID: 5665806529097825770}
   speed: 5
-  timerSpecialAttack: 0
-  useSpecialAttack: 0
   useAttack: 0
   isFlipped: 0
 --- !u!114 &8952455343745987196
@@ -191,8 +188,6 @@ MonoBehaviour:
     m_Bits: 128
   tr: {fileID: 2942717814667504235}
   projectile: {fileID: 6745112274258241625, guid: fb26ef05eae2a644d9fb071da44830b7, type: 3}
-  deathZoneUp: {fileID: 5301519346714834087, guid: 5cd7bf681ab273d46ac0f6c83d1265bb, type: 3}
-  deathZoneDown: {fileID: 5330151180963525933, guid: 22fec4d417ce9a145b39cdf5441a7776, type: 3}
 --- !u!96 &2942717814667504235
 TrailRenderer:
   serializedVersion: 3
@@ -345,7 +340,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3123342471752803141}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -453,7 +448,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8160598310325149099}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:

@@ -7,6 +7,7 @@ public class Object_Boss : MonoBehaviour
 {
     [Header("Autres")]
     private Spawner_Object_Boss objectSpawner;
+    public GameObject spawner;
     private Boss_Brain bossBrain;
     public GameObject objectSpawnerGO; // "wallGO" signifie "wallGameObject"
     public GameObject boss;
@@ -29,10 +30,12 @@ public class Object_Boss : MonoBehaviour
     [SerializeField] private Transform groundCheckRight;
     [SerializeField] private LayerMask groundLayer;
 
+    private bool canBeDestroyed;
     private void Start()
     {
         originalPosition = new Vector2(positionX, positionY);
-        objectSpawner = objectSpawnerGO.GetComponent<Spawner_Object_Boss>();
+        spawner = GameObject.FindGameObjectWithTag("SpawnerBoss");
+        objectSpawner = spawner.GetComponent<Spawner_Object_Boss>();
         bossBrain = boss.GetComponent<Boss_Brain>();
         anim = GetComponent<Animator>();
     }
@@ -41,6 +44,12 @@ public class Object_Boss : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F) && canChangeGravity && isGrounded())
         {
             changeGravity();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && canBeDestroyed)
+        {
+            objectSpawner.canDestroyObject();
+            Destroy(gameObject);
         }
     }
 
@@ -51,20 +60,21 @@ public class Object_Boss : MonoBehaviour
         {
             anim.SetBool("Awake", true);
             canChangeGravity = true;
-            other.enabled = true;
         }
 
         if (other.CompareTag("Boss")) // Permet de faire des degats au Boss
         {
-            Contact();
-            objectSpawner.canDestroy = true;
+
             bossBrain.TakeDamage();
+            objectSpawner.canDestroyObject();
+            Destroy(gameObject);
+
         }
 
         if (other.CompareTag("DeadlyProps")) // Permet de se detruire si autres contacts dangereux
         {
-            Contact();
-            objectSpawner.canDestroy = true;
+            objectSpawner.canDestroyObject();
+            Destroy(gameObject);
         }
     }
 
@@ -73,6 +83,7 @@ public class Object_Boss : MonoBehaviour
     {
         if (other.transform.CompareTag("Player"))
         {
+            canBeDestroyed = false;
             anim.SetBool("Awake", false);
             canChangeGravity = false;
         }
@@ -81,16 +92,16 @@ public class Object_Boss : MonoBehaviour
     // Permet de desactiver l'objet
     public void Contact()
     {
-        gameObject.SetActive(false);
-        gameObject.transform.position = originalPosition;
+        objectSpawner.canDestroy = true;
+        Destroy(gameObject);
     }
 
     // Permet de changer la gravite de l'objet
     private void changeGravity()
     {
-        originalGravity = -originalGravity;
         objectRB.gravityScale = originalGravity;
         Rotation();
+        originalGravity = -originalGravity;
     }
 
     // Permet de verifier si contact avec le sol

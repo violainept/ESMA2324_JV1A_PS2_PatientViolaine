@@ -6,9 +6,11 @@ using UnityEngine.SceneManagement;
 // Permet de rendre fonctionnel le Menu Principal
 public class MainMenu : MonoBehaviour
 {
+    public GameObject UI;
     // Permet de lancer le jeu
     public void PlayGame()
     {
+        UI.SetActive(true);
         SceneManager.LoadSceneAsync(1);
     }
 

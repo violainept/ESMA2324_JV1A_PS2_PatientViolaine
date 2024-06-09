@@ -7,6 +7,7 @@ public class Boss_Attack : MonoBehaviour
 {
     [Header("Autres")]
     private Player_Controller playerController;
+    private Player_Death playerDeath;
     private GameObject playerGO;
     public Transform player;
     public Rigidbody2D playerRB; // "playerRB" signifie "playerRigidBody"
@@ -30,14 +31,6 @@ public class Boss_Attack : MonoBehaviour
     public GameObject projectile;
     private float timerShooting;
 
-    [Header("Attaque Speciale")]
-    public GameObject deathZoneUp;
-    public GameObject deathZoneDown;
-    private bool useDeathZone;
-    private bool deathZone1AlreadyActivated;
-    private bool deathZone2AlreadyActivated;
-    private float timerDeathZone;
-
     private void Awake()
     {
         playerGO = GameObject.FindGameObjectWithTag("Player");
@@ -55,7 +48,7 @@ public class Boss_Attack : MonoBehaviour
     {
         timerShooting += Time.deltaTime;
 
-        if (timerShooting > 3)
+        if (timerShooting > 2f)
         {
             timerShooting = 0;
             Instantiate(projectile, gameObject.transform.position, Quaternion.identity);
@@ -132,62 +125,12 @@ public class Boss_Attack : MonoBehaviour
         bossBrain.anim.SetBool("Attacking", false);
     }
 
-    // Permet au Boss de changer la gravite du Joueur (attaque speciale)
-    public void SpecialAttack()
-    {
-        bossBrain.useSpecialAttack = true;
-        bossBrain.anim.SetBool("SpecialAttack", true);
-
-        if (!useDeathZone)
-        {
-            playerController.ChangeGravity();
-        }
-
-        useDeathZone = true;
-
-        if (playerRB.gravityScale == -60 && !deathZone2AlreadyActivated)
-        {
-            deathZone1AlreadyActivated = true;
-            timerDeathZone += Time.deltaTime;
-            deathZoneUp.SetActive(true);
-
-            if (timerDeathZone > 5)
-            {
-                bossBrain.anim.SetBool("SpecialAttack", false);
-                deathZoneUp.SetActive(false);
-                bossBrain.useSpecialAttack = false;
-                bossBrain.timerSpecialAttack = 0;
-                timerDeathZone = 0;
-                deathZone1AlreadyActivated = false;
-                useDeathZone = false;
-            }
-        }
-
-        if (playerRB.gravityScale == 60 && !deathZone1AlreadyActivated)
-        {
-            deathZone2AlreadyActivated = true;
-            timerDeathZone += Time.deltaTime;
-            deathZoneDown.SetActive(true);
-
-            if (timerDeathZone > 5)
-            {
-                bossBrain.anim.SetBool("SpecialAttack", false);
-                deathZoneDown.SetActive(false);
-                bossBrain.useSpecialAttack = false;
-                bossBrain.timerSpecialAttack = 0;
-                timerDeathZone = 0;
-                deathZone2AlreadyActivated = false;
-                useDeathZone = false;
-            }
-        }
-    }
-
     // Permet au Joueur de prendre des degats si contact avec le Boss
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            playerController.Die();
+            playerDeath.isDead = true;
         }
     }
 

@@ -13,11 +13,15 @@ TagManager:
   - Boss
   - Transition
   - Audio
+  - PauseMenu
+  - Spawner
+  - Spawner2
+  - SpawnerBoss
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - UI_Menu
   - Water
   - UI
   - Ground

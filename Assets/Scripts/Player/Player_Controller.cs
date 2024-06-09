@@ -6,15 +6,12 @@ public class Player_Controller : MonoBehaviour
 {
     // ----------------------------------------------------------------------------------- Proprietes et Variables ----------------------------------------------------------------------------------- //
 
-    [Header("Autre")]
-    private Transform playerSpawn;
-
     [Header("GameObject")]
     public Rigidbody2D rb;
     private BoxCollider2D boxCollider;
 
     [Header("Animations")]
-    private Animator anim;
+    public Animator anim;
 
     [Header("Mouvements")]
     private float horizontal;
@@ -32,7 +29,6 @@ public class Player_Controller : MonoBehaviour
     [Header("Mort")]
     public bool isDead;
     private float timerDelayDeath;
-    private Vector2 originalScale;
 
     [Header("Contact au Sol")]
     [SerializeField] private Transform groundCheck;
@@ -43,7 +39,6 @@ public class Player_Controller : MonoBehaviour
 
     private void Awake()
     {
-        playerSpawn = GameObject.FindGameObjectWithTag("PlayerSpawn").transform;
         anim = GetComponent<Animator>();
     }
 
@@ -51,7 +46,6 @@ public class Player_Controller : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
-        originalScale = new Vector2(0.5937178f, 0.5937178f);
     }
 
     void Update()
@@ -174,37 +168,6 @@ public class Player_Controller : MonoBehaviour
         }
      }
 
-    // ----------------------------------------------------------------------------------- GameObject : Mort ----------------------------------------------------------------------------------- //
-    // Permet au Joueur de mourir et de respawn
-
-    public void Die()
-    {
-        isDead = true;
-        //animator.SetTrigger("Die");
-        rb.bodyType = RigidbodyType2D.Kinematic;
-        rb.velocity = Vector3.zero;
-        boxCollider.enabled = false;
-        timerDelayDeath += Time.deltaTime;
-
-        if (timerDelayDeath > 2)
-        {
-            timerDelayDeath = 0;
-            Respawn();
-        }
-    }
-
-    // ----------------------------------------------------------------------------------- GameObject : Respawn ----------------------------------------------------------------------------------- //
-    // Permet de refaire apparaitre le joueur
-    public void Respawn()
-    {
-        transform.position = playerSpawn.position;
-        //animator.SetTrigger("Respawn");
-        rb.bodyType = RigidbodyType2D.Dynamic;
-        transform.localScale = originalScale;
-        boxCollider.enabled = true;
-        isDead = false;
-    }
-
     // ----------------------------------------------------------------------------------- GameObject : Contact Sol ----------------------------------------------------------------------------------- //
     // Permet de vérifier si le Joueur entre en contact avec un sol
     public bool isGrounded()
@@ -229,7 +192,7 @@ public class Player_Controller : MonoBehaviour
 
     // ----------------------------------------------------------------------------------- Visuel/GameObject : Change de sens (bas/haut) ----------------------------------------------------------------------------------- //
     // Permet au Joueur d'avoir une rotation lorsqu'il utilise la mécanique d'inverser la gravité
-    private void Rotation()
+    public void Rotation()
     {
         Vector3 ScalerUP = transform.localScale;
         ScalerUP.y *= -1;

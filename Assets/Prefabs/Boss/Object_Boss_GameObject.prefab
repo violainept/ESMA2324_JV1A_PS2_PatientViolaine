@@ -272,6 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 492560a29b3e1ea49831c7e0aff168ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawner: {fileID: 4629419428308465881, guid: d34d375c5411b914d8b867d932e71aa9, type: 3}
   objectSpawnerGO: {fileID: 4505528296273536457, guid: 6ffa5fb0faa820c48b6040abbff5490b, type: 3}
   boss: {fileID: 2733713391038743780, guid: a16834dcb14ad7a4dbb39f40d3c38517, type: 3}
   objectRB: {fileID: 1263157672161521688}

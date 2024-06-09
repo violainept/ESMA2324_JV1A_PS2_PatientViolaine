@@ -6,21 +6,41 @@ using UnityEngine;
 
 public class Object_Spawner : MonoBehaviour
 {
-    [Header("GameObject")]
-    public GameObject prefab;
+    [Header("Prefab Object")]
+    [SerializeField] private GameObject _Prefab;
 
-    [Header("Position")]
-    public Transform spawnPoint;
+    [Header("SpawnPosition")]
+    [SerializeField] private Transform _Position1;
+    [SerializeField] private Transform _Position2;
 
-    private void Start()
+    private GameObject _SpawnObject;
+
+    void Start()
     {
-        Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
-        prefab = GameObject.FindGameObjectWithTag("Object");
+        StartCoroutine(SpawnProcess());
     }
 
-    // Fait apparaitre de nouveau l'objet
-    public void Respawn()
+    public void CoroutineStart()
     {
-        Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
+        StartCoroutine(SpawnProcess());
+    }
+    public void SpawnObject()
+    {
+        _SpawnObject = Instantiate(_Prefab, _Position1.position, Quaternion.identity);
+    }
+
+    private void MoveSpawnObject(Vector3 _Position)
+    {
+        _SpawnObject.transform.position = _Position;
+    }
+
+    IEnumerator SpawnProcess()
+    {
+        SpawnObject();
+        yield return new WaitForSeconds(1f);
+        _SpawnObject.SetActive(false);
+        yield return new WaitForSeconds(1f);
+        MoveSpawnObject(_Position2.position);
+        _SpawnObject.SetActive(true);
     }
 }

@@ -8,7 +8,7 @@ public class Object_UsingGravity : MonoBehaviour
 {
     [Header("Autres")]
     public Object_Spawner objectSpawner;
-    public GameObject spawner;
+    private GameObject spawner;
 
     [Header("GameObject")]
     public Rigidbody2D rb;
@@ -21,9 +21,6 @@ public class Object_UsingGravity : MonoBehaviour
     [Header("Respawn")]
     private bool canBeDestroy = false;
 
-    [Header("Position")]
-    [SerializeField] private float positionX;
-    [SerializeField] private float positionY;
 
     [Header("Contact au sol")]
     [SerializeField] private Transform groundCheckLeft;
@@ -32,6 +29,7 @@ public class Object_UsingGravity : MonoBehaviour
 
     private void Start()
     {
+        spawner = GameObject.FindGameObjectWithTag("Spawner");
         objectSpawner = spawner.GetComponent<Object_Spawner>();
         anim = GetComponent<Animator>();
     }
@@ -63,7 +61,7 @@ public class Object_UsingGravity : MonoBehaviour
 
     private void isDestroyed()
     {
-        objectSpawner.Respawn();
+        objectSpawner.CoroutineStart();
         Destroy(gameObject);
     }
     private void OnTriggerExit2D(Collider2D other)

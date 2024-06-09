@@ -42,7 +42,7 @@ public class Boss_Projectile : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<Player_Controller>().Die();
+            other.gameObject.GetComponent<Player_Death>().isDead = true;
             anim.SetTrigger("isDying");
         }
     }

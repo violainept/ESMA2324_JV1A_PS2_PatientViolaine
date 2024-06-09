@@ -5,7 +5,6 @@ using UnityEngine.UIElements;
 
 public class Switch_Music : MonoBehaviour
 {
-    [SerializeField] AudioSource musicSource;
     Audio_Manager audioManager;
 
     private void Start()
@@ -16,8 +15,7 @@ public class Switch_Music : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            audioManager.backgroundMusic = false;
-            audioManager.bossThemeMusic = true;
+            audioManager.PlayMusic(audioManager.bossTheme);
         }
     }
 
@@ -25,8 +23,7 @@ public class Switch_Music : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            audioManager.bossThemeMusic = false;
-            audioManager.backgroundMusic = false;
+            audioManager.PlayMusic(audioManager.background);
         }
     }
 }

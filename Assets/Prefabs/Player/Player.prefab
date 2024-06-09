@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6649645732797715399}
   - component: {fileID: 5592431281880412935}
   - component: {fileID: 1944864161531303559}
+  - component: {fileID: 7064733478224925667}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -195,6 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 252780730328185709}
+  anim: {fileID: 5592431281880412935}
   jumpForce: 55
   getPowerUp: 0
   isDead: 0
@@ -202,6 +204,20 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &7064733478224925667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3395376490026743976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75957a30a7514584795c7ea403e86f0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1944864161531303559}
+  animPlayer: {fileID: 5592431281880412935}
 --- !u!1 &6578350493461032568
 GameObject:
   m_ObjectHideFlags: 0

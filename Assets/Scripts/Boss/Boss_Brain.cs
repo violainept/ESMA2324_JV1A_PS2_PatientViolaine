@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class Boss_Brain : MonoBehaviour
 {
-    [Header("Activer Boss")]
-    public bool isActivate = false;
-
     [Header("Autres")]
     public Player_Controller playerController;
     public Spawner_Object_Boss objectSpawner;
@@ -15,8 +12,8 @@ public class Boss_Brain : MonoBehaviour
     public Rigidbody2D playerRB; // "playerRB" signifie "playerRigidBody"
     private GameObject playerGO;
     public GameObject objectGO; // "objectGO" signifie "objectGameObject"
-    public GameObject bossAwakeGO;
     private Object_Boss objectBoss;
+    public GameObject panelCredits;
 
     [Header("GameObject")]
     public Rigidbody2D bossRB; // "bossRB" signifie "bossRigidBody"
@@ -25,13 +22,12 @@ public class Boss_Brain : MonoBehaviour
     public BoxCollider2D boxCollider;
     public Animator anim;
     private Boss_Attack bossAttack;
+    private bool isInvincible;
 
     [Header("Cours")]
     public float speed;
 
     [Header("Attaques")]
-    public float timerSpecialAttack;
-    public bool useSpecialAttack;
     public bool useAttack;
 
     [Header("Vie")]
@@ -57,41 +53,24 @@ public class Boss_Brain : MonoBehaviour
     // Si le Joueur est mort, reset les timers et positions du Boss. Sinon, si le Boss est active, commence le combat.
     private void Update()
     {
-        if (playerController.isDead)
-        {
-            isActivate = false;
-            anim.SetBool("Activate", isActivate);
-            Reset();
-        }
+        anim.SetBool("Activate", true);
 
-        if (isActivate)
+        if (!useAttack && !isInvincible)
         {
-            anim.SetBool("Activate", isActivate);
-            timerSpecialAttack += Time.deltaTime;
-
-            if (!useSpecialAttack && !useAttack)
+            if (playerRB.gravityScale == 60)
             {
-                if (playerRB.gravityScale == 60)
-                {
-                    Run();
-                }
-
-                if (playerRB.gravityScale == -60)
-                {
-                    anim.SetBool("Shooting", true);
-                    bossAttack.Shooting();
-                }
-
-                else
-                {
-                    anim.SetBool("Shooting", false);
-                }
+                Run();
             }
 
-            if (timerSpecialAttack >= 15)
+            if (playerRB.gravityScale == -60)
             {
-                useSpecialAttack = true;
-                bossAttack.SpecialAttack();
+                anim.SetBool("Shooting", true);
+                bossAttack.Shooting();
+            }
+
+            else
+            {
+                anim.SetBool("Shooting", false);
             }
         }
     }
@@ -115,32 +94,35 @@ public class Boss_Brain : MonoBehaviour
     public void TakeDamage()
     {
         anim.SetBool("Hurting", true);
+        bossRB.gravityScale = 10;
+
         health -= 1;
+        Invincibility();
 
         if (health <= 0)
         {
             Die();
             return;
         }
-
-        Invincibility();
     }
 
     private void Invincibility()
     {
-        isActivate = false;
-        boxCollider.enabled = false;
-        hitbox.enabled = false; 
         StartCoroutine(InvincibilityTimer());
     }
 
     private IEnumerator InvincibilityTimer()
     {
+        isInvincible = true;
+        bossRB.isKinematic = true;
+        boxCollider.enabled = false;
+        hitbox.enabled = false;
         yield return new WaitForSeconds(2);
+        bossRB.isKinematic = false;
         boxCollider.enabled = true;
         hitbox.enabled = true;
-        isActivate = true;
         anim.SetBool("Hurting", false);
+        isInvincible = false;
     }
 
     // Permet de tuer le Boss
@@ -151,16 +133,8 @@ public class Boss_Brain : MonoBehaviour
 
     private void DestroyBoss()
     {
+        panelCredits.SetActive(true);
         Destroy(gameObject);
-    }
-
-    // Permet de reset le Boss
-    private void Reset()
-    {
-        bossAwakeGO.SetActive(true);
-        isActivate = false;
-        timerSpecialAttack = 0;
-        health = 9;
     }
 
     // Permet au Boss de regarder dans la direction du Joueur
