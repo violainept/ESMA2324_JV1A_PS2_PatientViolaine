@@ -12,6 +12,7 @@ TagManager:
   - DeadlyProps
   - Boss
   - Transition
+  - Audio
   layers:
   - Default
   - TransparentFX
