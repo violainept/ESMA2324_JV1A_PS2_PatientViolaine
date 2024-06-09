@@ -8,6 +8,8 @@ public class Platform_Moving : MonoBehaviour
 {
     [Header("Autre")]
     public Rigidbody2D playerRB;
+    private Player_Controller playerController;
+    public GameObject player;
 
     [Header("GameObject")]
     public Rigidbody2D platformRB;
@@ -23,6 +25,7 @@ public class Platform_Moving : MonoBehaviour
     private void Start()
     {
         targetPos = posB.position;
+        playerController = player.GetComponent<Player_Controller>();
     }
 
     private void Update()

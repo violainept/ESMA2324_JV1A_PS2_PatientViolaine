@@ -33,6 +33,7 @@ public class Enemy_Patrolling_Vertical : MonoBehaviour
     // Permet de desactiver la gravite au bout d'un certain temps
     public IEnumerator gravityDesactivated()
     {
+        anim.SetBool("gravityActivated", false);
         rb.gravityScale = -3;
         yield return new WaitForSeconds(2);
         top = false;
@@ -41,6 +42,7 @@ public class Enemy_Patrolling_Vertical : MonoBehaviour
     // Permet d'activer la gravite au bout d'un certain temps
     public IEnumerator gravityActivated()
     {
+        anim.SetBool("gravityActivated", true);
         rb.gravityScale = 3;
         yield return new WaitForSeconds(2);
         top = true;

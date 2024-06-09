@@ -8,12 +8,15 @@ public class Platform_Disappear_Activated_Desactivated : MonoBehaviour
 {
     [Header("GameObject")]
     public GameObject platform;
-    public Animator anim;
+    private Platform_Disappear platformProcess;
 
     [Header("Timers")]
-    private float shakingTime = 1f;
     private float disappearingTime = 1f;
 
+    private void Start()
+    {
+        platformProcess = platform.GetComponent<Platform_Disappear>();
+    }
     public void CallPlatformSystem()
     {
         StartCoroutine(PlatformSystem());
@@ -22,9 +25,9 @@ public class Platform_Disappear_Activated_Desactivated : MonoBehaviour
     // Permet de faire disparaitre la plateforme, d'attendre puis de la refaire apparaitre
     private IEnumerator PlatformSystem()
     {
-        yield return new WaitForSeconds(shakingTime);
         platform.SetActive(false);
         yield return new WaitForSeconds(disappearingTime);
         platform.SetActive(true);
+        platformProcess.anim.SetBool("startProcess", false);
     }
 }

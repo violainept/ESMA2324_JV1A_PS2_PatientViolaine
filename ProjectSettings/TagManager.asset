@@ -11,6 +11,7 @@ TagManager:
   - Object
   - DeadlyProps
   - Boss
+  - Transition
   layers:
   - Default
   - TransparentFX

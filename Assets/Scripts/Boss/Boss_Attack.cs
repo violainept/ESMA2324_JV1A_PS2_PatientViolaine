@@ -77,11 +77,13 @@ public class Boss_Attack : MonoBehaviour
 
             if (transform.position.x > player.position.x)
             {
+                bossBrain.anim.SetBool("Attacking", true);
                 StartCoroutine(DashRight());
             }
 
             if (transform.position.x < player.position.x)
             {
+                bossBrain.anim.SetBool("Attacking", true);
                 StartCoroutine(DashLeft());
             }
         }
@@ -106,6 +108,7 @@ public class Boss_Attack : MonoBehaviour
         yield return new WaitForSeconds(dashingCooldown);
 
         bossBrain.useAttack = false;
+        bossBrain.anim.SetBool("Attacking", false);
     }
 
     private IEnumerator DashLeft()
@@ -126,12 +129,14 @@ public class Boss_Attack : MonoBehaviour
         yield return new WaitForSeconds(dashingCooldown);
 
         bossBrain.useAttack = false;
+        bossBrain.anim.SetBool("Attacking", false);
     }
 
     // Permet au Boss de changer la gravite du Joueur (attaque speciale)
     public void SpecialAttack()
     {
         bossBrain.useSpecialAttack = true;
+        bossBrain.anim.SetBool("SpecialAttack", true);
 
         if (!useDeathZone)
         {
@@ -148,6 +153,7 @@ public class Boss_Attack : MonoBehaviour
 
             if (timerDeathZone > 5)
             {
+                bossBrain.anim.SetBool("SpecialAttack", false);
                 deathZoneUp.SetActive(false);
                 bossBrain.useSpecialAttack = false;
                 bossBrain.timerSpecialAttack = 0;
@@ -165,6 +171,7 @@ public class Boss_Attack : MonoBehaviour
 
             if (timerDeathZone > 5)
             {
+                bossBrain.anim.SetBool("SpecialAttack", false);
                 deathZoneDown.SetActive(false);
                 bossBrain.useSpecialAttack = false;
                 bossBrain.timerSpecialAttack = 0;

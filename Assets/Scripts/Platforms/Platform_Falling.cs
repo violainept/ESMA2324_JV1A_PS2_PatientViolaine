@@ -5,25 +5,34 @@ using UnityEngine;
 // Permet de faire tomber la plateforme si le Joueur rentre en contact avec
 public class Platform_Falling : MonoBehaviour
 {
+    [Header("GameObject")]
+    private Animator anim;
+
     [Header("Timers")]
-    private float fallDelay = 0.5f;
     private float destroyDelay = 2f;
 
     [SerializeField] private Rigidbody2D rb;
 
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
     // Si le Joueur est détecté, la plateforme tombe
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-            {
-            StartCoroutine(Fall());
+        {
+            anim.SetTrigger("Falling");
+        }
+
+        if (collision.gameObject.CompareTag("DeadlyProps"))
+        {
+            Destroy(gameObject);
         }
     }
 
-    // Permet de faire tomber la plateforme après quelques secondes et de la detruire
-    private IEnumerator Fall()
+    public void Falling()
     {
-        yield return new WaitForSeconds(fallDelay);
         rb.bodyType = RigidbodyType2D.Dynamic;
         Destroy(gameObject, destroyDelay);
     }

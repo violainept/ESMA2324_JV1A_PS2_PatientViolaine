@@ -7,7 +7,7 @@ using UnityEngine;
 public class Collectible_Achievement : MonoBehaviour
 {
     [Header("Autre")]
-    private Collectible_Collected collectibleCollected;
+    private Collectible_Interaction collectibleCollected;
     public GameObject collectible;
 
     [Header("GameObject")]
@@ -16,7 +16,7 @@ public class Collectible_Achievement : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
-        collectibleCollected = collectible.GetComponent<Collectible_Collected>();
+        collectibleCollected = collectible.GetComponent<Collectible_Interaction>();
     }
 
     private void Update()

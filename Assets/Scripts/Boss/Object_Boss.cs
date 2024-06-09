@@ -13,6 +13,7 @@ public class Object_Boss : MonoBehaviour
 
     [Header("GameObject")]
     public Rigidbody2D objectRB;
+    private Animator anim;
     private Vector2 originalPosition;
 
     [Header("Inverser gravite")]
@@ -33,6 +34,7 @@ public class Object_Boss : MonoBehaviour
         originalPosition = new Vector2(positionX, positionY);
         objectSpawner = objectSpawnerGO.GetComponent<Spawner_Object_Boss>();
         bossBrain = boss.GetComponent<Boss_Brain>();
+        anim = GetComponent<Animator>();
     }
     private void Update()
     {
@@ -47,6 +49,7 @@ public class Object_Boss : MonoBehaviour
     {
         if (other.CompareTag("Player")) // Permet au Joueur d'interagir
         {
+            anim.SetBool("Awake", true);
             canChangeGravity = true;
             other.enabled = true;
         }
@@ -70,6 +73,7 @@ public class Object_Boss : MonoBehaviour
     {
         if (other.transform.CompareTag("Player"))
         {
+            anim.SetBool("Awake", false);
             canChangeGravity = false;
         }
     }

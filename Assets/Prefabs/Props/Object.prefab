@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 4203631293663828218}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.237, y: 0.527, z: 0}
+  m_LocalPosition: {x: -0.237, y: -0.527, z: 0}
   m_LocalScale: {x: 0.79999995, y: 0.79999995, z: 0.79999995}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 5527438638261314243}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.20779896, y: 0.52699995, z: 0}
+  m_LocalPosition: {x: 0.20779896, y: -0.5269999, z: 0}
   m_LocalScale: {x: 0.79999995, y: 0.79999995, z: 0.79999995}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 4702620019503286633}
   - component: {fileID: 2952306447429718572}
   - component: {fileID: 3657235474956313209}
+  - component: {fileID: 6367223171615440683}
   - component: {fileID: 5563974546791283559}
   m_Layer: 0
   m_Name: Object
@@ -91,9 +92,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9183292811420190931}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.5473423, y: 2.2034342, z: 0.05232834}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.241795, y: 1.241795, z: 1.241795}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4459990081079869825}
@@ -141,8 +142,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.8301887, g: 0.7005343, b: 0.34199592, a: 1}
+  m_Sprite: {fileID: -273864149, guid: ec20190d3b6215f489db55e2cc67d24a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -167,7 +168,7 @@ Rigidbody2D:
   m_Mass: 6
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: -10
+  m_GravityScale: 10
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -211,18 +212,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0037550926, y: 0.0044680834}
+  m_Offset: {x: 0.006203145, y: 0.0044680834}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.925, y: 0.95}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.2204218, y: 1.2289445}
+  m_Size: {x: 1.3524883, y: 1.2289445}
   m_EdgeRadius: 0
 --- !u!61 &3657235474956313209
 BoxCollider2D:
@@ -256,19 +257,40 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0036778003, y: 0.005516559}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.925, y: 0.95}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.8970226, y: 0.919089}
   m_EdgeRadius: 0
+--- !u!95 &6367223171615440683
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9183292811420190931}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 22e57d60951cbb9428576e0e3ce1195c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &5563974546791283559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,7 +306,7 @@ MonoBehaviour:
   objectSpawner: {fileID: 3222967428175472648, guid: ee969e03d0731f94a807b62426667e18, type: 3}
   spawner: {fileID: 243374678707506805, guid: ee969e03d0731f94a807b62426667e18, type: 3}
   rb: {fileID: 4702620019503286633}
-  originalGravity: -10
+  originalGravity: 10
   positionX: 12.51
   positionY: 5.562
   groundCheckLeft: {fileID: 4459990081079869825}

@@ -26,8 +26,8 @@ public class Button : MonoBehaviour
             buttonAnim.SetBool("isPushed", true);
             originalSize = buttonCollider.size;
             originalOffset = buttonCollider.offset;
-            buttonCollider.size = new Vector3(1.111111f, 0, 0);
-            buttonCollider.offset = new Vector3(0, -0.5555556f, 0);
+            buttonCollider.size = new Vector3(1.985535f, 0.3614942f, 0);
+            buttonCollider.offset = new Vector3(0.003013611f, -0.15287f, 0);
             StartCoroutine(obstacleDesactivated());
         }
 

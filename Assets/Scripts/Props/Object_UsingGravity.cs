@@ -12,11 +12,14 @@ public class Object_UsingGravity : MonoBehaviour
 
     [Header("GameObject")]
     public Rigidbody2D rb;
-    private Vector2 originalPosition;
+    private Animator anim;
 
     [Header("Inverser gravite")]
     private bool canChangeGravity = false;
     [SerializeField] private float originalGravity;
+
+    [Header("Respawn")]
+    private bool canBeDestroy = false;
 
     [Header("Position")]
     [SerializeField] private float positionX;
@@ -29,8 +32,8 @@ public class Object_UsingGravity : MonoBehaviour
 
     private void Start()
     {
-        originalPosition = new Vector2(positionX, positionY);
         objectSpawner = spawner.GetComponent<Object_Spawner>();
+        anim = GetComponent<Animator>();
     }
     private void Update()
     {
@@ -38,25 +41,36 @@ public class Object_UsingGravity : MonoBehaviour
         {
             changeGravity();
         }
+        if (Input.GetKeyDown(KeyCode.R) && canBeDestroy)
+        {
+            isDestroyed();
+        }
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.transform.CompareTag("Player"))
         {
+            anim.SetBool("Awake", true);
             canChangeGravity = true;
+            canBeDestroy = true;
         }
 
         if (other.transform.CompareTag("Enemy") || other.transform.CompareTag("DeadlyProps"))
         {
-            objectSpawner.Respawn();
-            Destroy(gameObject);
+            isDestroyed();
         }
     }
 
+    private void isDestroyed()
+    {
+        objectSpawner.Respawn();
+        Destroy(gameObject);
+    }
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.transform.CompareTag("Player"))
         {
+            anim.SetBool("Awake", false);
             canChangeGravity = false;
         }
     }

@@ -7,32 +7,18 @@ public class Collectible_Interaction : MonoBehaviour
     // Permet de faire apparaitre un texte lorsque le Joueur s'approche puis un Collectible de Souvenir s'il interagit avec
 {
     [Header("GameObject")]
-    public GameObject panelObject;
     public Animator anim;
 
     [Header("Detection")]
-    private bool panelIsActivated = false;
     private bool playerIsInsideTrigger = false;
+    public bool isCollected = false;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && playerIsInsideTrigger)
         {
-            Interaction();
+            isCollected = true;
         }
-
-        if (Input.GetMouseButtonDown(0) && panelIsActivated)
-        {
-            panelIsActivated = false;
-            panelObject.SetActive(false);
-        }
-    }
-
-    // Permet de faire apparaitre le Collectible de Souvenir
-    private void Interaction()
-    {
-        panelIsActivated = true;
-        panelObject.SetActive(true);
     }
 
     // Permet de rendre visible avec une animation le texte lorsque le Joueur s'approche
@@ -51,12 +37,6 @@ public class Collectible_Interaction : MonoBehaviour
         if (collision.transform.CompareTag("Player"))
         {
             Invisible();
-
-            if (panelIsActivated)
-            {
-                panelObject.SetActive(false);
-            }
-
             playerIsInsideTrigger = false;
         }
     }

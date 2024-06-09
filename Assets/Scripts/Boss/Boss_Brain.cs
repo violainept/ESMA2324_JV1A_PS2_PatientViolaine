@@ -23,6 +23,7 @@ public class Boss_Brain : MonoBehaviour
     public SpriteRenderer graphics;
     public BoxCollider2D hitbox;
     public BoxCollider2D boxCollider;
+    public Animator anim;
     private Boss_Attack bossAttack;
 
     [Header("Cours")]
@@ -44,7 +45,7 @@ public class Boss_Brain : MonoBehaviour
         playerGO = GameObject.FindGameObjectWithTag("Player");
         playerRB = playerGO.GetComponent<Rigidbody2D>();
         player = playerGO.transform;
-
+        anim = GetComponent<Animator>();
     }
 
     private void Start()
@@ -59,11 +60,13 @@ public class Boss_Brain : MonoBehaviour
         if (playerController.isDead)
         {
             isActivate = false;
+            anim.SetBool("Activate", isActivate);
             Reset();
         }
 
         if (isActivate)
         {
+            anim.SetBool("Activate", isActivate);
             timerSpecialAttack += Time.deltaTime;
 
             if (!useSpecialAttack && !useAttack)
@@ -75,7 +78,13 @@ public class Boss_Brain : MonoBehaviour
 
                 if (playerRB.gravityScale == -60)
                 {
+                    anim.SetBool("Shooting", true);
                     bossAttack.Shooting();
+                }
+
+                else
+                {
+                    anim.SetBool("Shooting", false);
                 }
             }
 
@@ -105,6 +114,7 @@ public class Boss_Brain : MonoBehaviour
     // Permet au Boss de prendre des degats
     public void TakeDamage()
     {
+        anim.SetBool("Hurting", true);
         health -= 1;
 
         if (health <= 0)
@@ -119,26 +129,28 @@ public class Boss_Brain : MonoBehaviour
     private void Invincibility()
     {
         isActivate = false;
-        bossRB.isKinematic = true;
         boxCollider.enabled = false;
         hitbox.enabled = false; 
         StartCoroutine(InvincibilityTimer());
-        //animation
     }
 
     private IEnumerator InvincibilityTimer()
     {
         yield return new WaitForSeconds(2);
-        bossRB.isKinematic = false;
         boxCollider.enabled = true;
         hitbox.enabled = true;
         isActivate = true;
+        anim.SetBool("Hurting", false);
     }
 
     // Permet de tuer le Boss
     private void Die()
     {
-        Debug.Log("Dead");
+        anim.SetBool("Dying", true);
+    }
+
+    private void DestroyBoss()
+    {
         Destroy(gameObject);
     }
 

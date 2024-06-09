@@ -7,6 +7,7 @@ public class Boss_Projectile : MonoBehaviour
     [Header("GameObject")]
     public GameObject player;
     private Rigidbody2D rb;
+    private Animator anim;
 
     [Header("Parametres")]
     public float force;
@@ -16,6 +17,7 @@ public class Boss_Projectile : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
         Vector3 direction = player.transform.position - transform.position;
         rb.velocity = new Vector2(direction.x, direction.y).normalized * force;
@@ -31,7 +33,7 @@ public class Boss_Projectile : MonoBehaviour
 
         if (timer > 4)
         {
-            Destroy(gameObject);
+            anim.SetTrigger("isDying");
         }
     }
 
@@ -41,7 +43,12 @@ public class Boss_Projectile : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             other.gameObject.GetComponent<Player_Controller>().Die();
-            Destroy(gameObject);
+            anim.SetTrigger("isDying");
         }
+    }
+
+    public void DestroyingProjectile()
+    {
+        Destroy(gameObject);
     }
 }

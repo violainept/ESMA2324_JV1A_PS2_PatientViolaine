@@ -13,14 +13,21 @@ public class Player_Controller : MonoBehaviour
     public Rigidbody2D rb;
     private BoxCollider2D boxCollider;
 
+    [Header("Animations")]
+    private Animator anim;
+
     [Header("Mouvements")]
     private float horizontal;
     private float speed = 10f;
 
-    [Header("Inverser gravité")]
-    [SerializeField] private float currentGravity;
-    [SerializeField] private bool canTriggerGravity = true;
-    private float maxGravity = 2;
+    [Header("Saut")]
+    public float jumpForce;
+
+    [Header("Inverser Gravite")]
+    public bool getPowerUp;
+    private float gravityCount;
+    private bool gravityUp;
+    private bool gravityDown;
 
     [Header("Mort")]
     public bool isDead;
@@ -31,12 +38,13 @@ public class Player_Controller : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
 
-    [Header("Se retourne")]
+    [Header("Se retourner")]
     private bool isFacingRight = true;
 
     private void Awake()
     {
         playerSpawn = GameObject.FindGameObjectWithTag("PlayerSpawn").transform;
+        anim = GetComponent<Animator>();
     }
 
     void Start()
@@ -50,21 +58,24 @@ public class Player_Controller : MonoBehaviour
     {
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        if (isDead)
+        if (isGrounded()) 
         {
-            Die();
+            gravityCount = 1; // Remettre à zero le compteur de gravité
+
+            anim.SetBool("isJumping", false);
         }
 
         if (!isDead)
         {
-            if (isGrounded())
-            {
-                currentGravity = maxGravity;
-                canTriggerGravity = true;
-            }
-
+            Jumping();
             Flip();
-            EnableGravity();
+
+            anim.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
+
+            if (getPowerUp)
+            {
+                EnableGravity();
+            }
         }
     }
 
@@ -83,29 +94,84 @@ public class Player_Controller : MonoBehaviour
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
     }
 
+
+    // ----------------------------------------------------------------------------------- Mecanique : Saut ----------------------------------------------------------------------------------- //
+    // Permet au Joueur de sauter
+    private void Jumping()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
+        {
+            if (rb.gravityScale == 60)
+            {
+                rb.gravityScale = 20;
+            }
+
+            if (rb.gravityScale == -60)
+            {
+                rb.gravityScale = -20;
+            }
+
+            if (rb.gravityScale == 20)
+            {
+                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            }
+
+            if (rb.gravityScale == -20)
+            {
+                rb.AddForce(Vector2.down * jumpForce, ForceMode2D.Impulse);
+            }
+
+            anim.SetBool("isJumping", true);
+        }
+    }
+
     // ----------------------------------------------------------------------------------- Mecanique principale : Inverser gravité ----------------------------------------------------------------------------------- //
     // Permet au Joueur de changer la gravité de façon limitée (maximum de 2 fois)
     public void EnableGravity()
     {
-        if (Input.GetKeyDown("space") && canTriggerGravity)
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            if (currentGravity > 0)
+            if (gravityCount == 1)
             {
-                currentGravity -= 1;
                 ChangeGravity();
             }
-
-            if (currentGravity <= 0)
-            {
-                canTriggerGravity = false;
-            }
+            gravityCount -= 1;
         }
     }
     
     public void ChangeGravity()
     {
-        rb.gravityScale *= -1;
-        Rotation();
+        if (rb.gravityScale == 20)
+        {
+            anim.SetBool("usingGravity", true);
+            rb.gravityScale = -60;
+            Rotation();
+            return;
+        }
+
+        if (rb.gravityScale == 60)
+        {
+            anim.SetBool("usingGravity", true);
+            rb.gravityScale = -60;
+            Rotation();
+            return;
+        }
+
+        if (rb.gravityScale == -60)
+        {
+            anim.SetBool("usingGravity", false);
+            rb.gravityScale = 60;
+            Rotation();
+            return;
+        }
+
+        if (rb.gravityScale == -20)
+        {
+            anim.SetBool("usingGravity", false);
+            rb.gravityScale = 60;
+            Rotation();
+            return;
+        }
      }
 
     // ----------------------------------------------------------------------------------- GameObject : Mort ----------------------------------------------------------------------------------- //
@@ -155,9 +221,9 @@ public class Player_Controller : MonoBehaviour
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
             isFacingRight = !isFacingRight;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
+            Vector3 currentScale = transform.localScale;
+            currentScale.x *= -1f;
+            transform.localScale = currentScale;
         }
     }
 

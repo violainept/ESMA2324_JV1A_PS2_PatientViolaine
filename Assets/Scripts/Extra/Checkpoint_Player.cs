@@ -7,10 +7,12 @@ public class Checkpoint_Player : MonoBehaviour
 {
     [Header("Autre")]
     private Transform playerSpawn;
+    private Animator anim;
 
     private void Awake()
     {
         playerSpawn = GameObject.FindGameObjectWithTag("PlayerSpawn").transform;
+        anim = GetComponent<Animator>();
     }
 
     // Si le Joueur entre en contact, le checkpoint garde la position en memoire
@@ -18,6 +20,7 @@ public class Checkpoint_Player : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            anim.SetBool("Checkpoint", true);
             playerSpawn.position = transform.position;
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
         }
