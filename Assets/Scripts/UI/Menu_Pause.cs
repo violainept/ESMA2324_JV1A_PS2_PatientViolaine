@@ -8,10 +8,14 @@ using UnityEngine.SceneManagement;
 public class Menu_Pause : MonoBehaviour
 {
     [Header("Parametres")]
-    [SerializeField] private GameObject pauseMenuUI;
+    public GameObject pauseMenuUI;
     public static bool GameIsPaused = false;
     public string sceneName;
 
+    private void Start()
+    {
+        pauseMenuUI.SetActive(false);
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -46,6 +50,7 @@ public class Menu_Pause : MonoBehaviour
     // Permet de revenir au Menu
     public void LoadMenu()
     {
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene(sceneName);
         GameIsPaused = false;
     }

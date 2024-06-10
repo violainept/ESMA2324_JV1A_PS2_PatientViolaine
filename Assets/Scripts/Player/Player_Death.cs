@@ -7,6 +7,7 @@ public class Player_Death : MonoBehaviour
 {
     [Header("Autre")]
     private Transform playerSpawn;
+    public Transform playerTR;
 
     public Player_Controller player;
     public Animator animPlayer;
@@ -28,6 +29,8 @@ public class Player_Death : MonoBehaviour
 
     private void Update()
     {
+        playerSpawn = GameObject.FindGameObjectWithTag("PlayerSpawn").transform;
+
         if (isDead)
         {
             if (player.rb.gravityScale == 20 || player.rb.gravityScale == 60)
@@ -49,7 +52,7 @@ public class Player_Death : MonoBehaviour
     {
         animPlayer.SetTrigger("isDyingDown");
         yield return new WaitForSeconds(0.2f);
-        transform.position = playerSpawn.position;
+        player.transform.position = playerSpawn.position;
         player.rb.velocity = Vector3.zero;
         animPlayer.SetTrigger("Respawn");
     }
@@ -58,7 +61,7 @@ public class Player_Death : MonoBehaviour
     {
         animPlayer.SetTrigger("isDyingUp");
         yield return new WaitForSeconds(0.2f);
-        transform.position = playerSpawn.position;
+        playerTR.position = playerSpawn.position;
         player.rb.velocity = Vector3.zero;
         animPlayer.SetBool("usingGravity", false);
         animPlayer.SetTrigger("Respawn");

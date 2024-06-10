@@ -9,11 +9,6 @@ public class Audio_Manager : MonoBehaviour
     public AudioClip background;
     public AudioClip bossTheme;
 
-    private void Start()
-    {
-        PlayMusic(background);
-    }
-
     public void PlayMusic(AudioClip source)
     {
         musicSource.clip = source;

@@ -10,7 +10,7 @@ public class Spikes : MonoBehaviour
     {
         if (other.transform.CompareTag("Player"))
         {
-            Player_Death player = other.transform.GetComponent<Player_Death>();
+            Player_Death player = other.gameObject.GetComponent<Player_Death>();
             player.isDead = true;
         }
     }
